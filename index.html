@@ -12,140 +12,235 @@
         <button class="navButton" id="all">Todo</button>
         <button class="navButton" id="tasks">Tareas</button>
         <button class="navButton" id="events">Eventos</button>
-        <button class="navButton" id="list">Listas</button>
+        <button class="navButton" id="lists">Listas</button>
     </nav>
 
+    <!-- Modals -->
+
+    <!-- ocupa y "bloquea" la pantalla entera -->
+    <section class="modalContenedor">
+        <div class="modal" id="modalDelete"> 
+            <!-- contiene el mensaje y el cierre-->
+            <div class="modalContenido" id="modalContenido">
+                <h1>Advertencia</h1>
+
+                <h3>¿Seguro que quieres borrrar ?</h3>
+
+                <section class="buttons">
+                    <button class="confirmDelete" id="confirmDelete">Borrar</button>
+                    <button class="cancelDelete" id="cancelDelete">Cancelar</button>
+                </section>
+            </div>
+        </div>
+    </section>
+
+    <section class="modalContenedor">
+        <div class="modal" id="modalCard"> 
+            <!-- contiene el mensaje y el cierre-->
+            <div class="modalContenido" id="modalContenido">
+                <h1>Aca va un titulo</h1>
+
+                <h3>Aca va una descripcion<h3>
+
+                <section class="buttons">
+                    <button class="closeButton" id="closeButton">Cerrar</button>
+                </section>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contenedor Principal -->
     <section class="maincontainer">
+            
+        <!-- Creador de notas -->
         <section class="insertCard">
             <form id="formCard">
-                <div class="inputContainer"> 
-                    <input class="titleInput" type="text" id="cardTitle" placeholder="Agregue una tarjeta">
+                <h1>Ingresar Recordatorio</h1>
+
+                <!-- Selector de tipo de nota -->
+
+                <div class="checkContainer">
+                    <label for="typeEvent">Seleccione el tipo de evento:</label> <br>
+                    Tarea <input type="radio" checked class="check" name="typeEvent" id="task"> 
+                    Evento <input type="radio" class="check" name="typeEvent" id="event"> 
+                    Lista <input type="radio" class="check" name="typeEvent" id="list">
                 </div>
-                <div class="inputContainer">
+
+                <div class="inputContainer">                     
+                    <input class="titleInput" type="text" id="cardTitle" placeholder="Agregue un tiulo a la tarjeta">
+                </div>
+
+                <!-- Nota de tipo Task -->
+
+                <div class="inputContainer" id="conteinerTask">
                     <textarea class="descriptionTask" type="text" id="cardDescription" placeholder="Descripcion de tarjeta" cols="30" rows="10"></textarea>
                 </div>
+
+                <!-- Nota de tipo Event-->
+                
+                <div class="inputConteiner" id="conteinerEvent">
+                    <div class="inputContainer">
+                        <textarea class="eventDesc" type="text" id="eventDescription" placeholder="Descripcion de tarjeta" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="inputContainer">
+                        <input type="date" id="dateEvent" class="dateEvent">
+                    </div>
+                </div>
+                
+                
+                <!-- Nota de tipo List -->
+
+                <div class="inputContainer" id="conteinerList">
+                    <input type="text" id="item1" class="itemList" placeholder="Ingrese un item a la lista">
+                    <input type="text" id="item2" class="itemList" placeholder="Ingrese un item a la lista">
+                    <input type="text" id="item3" class="itemList" placeholder="Ingrese un item a la lista">
+                    <input type="text" id="item4" class="itemList" placeholder="Ingrese un item a la lista">
+                    <input type="text" id="item5" class="itemList" placeholder="Ingrese un item a la lista">
+                </div>
+
                 <button  class="formButton" id="saveCard">Guardar</button>
             </form>
         </section>
-
+        
+        <!-- Bandeja de notas -->
         <section class="cardTable">
-            <div class="card">
 
+            <div class="task" id="task-1">
                 <section class="cardData">
-                    <h1>cena con Lara</h1>
-                    <p>Una cena con Lara</p>
+                    <h1>Sacar a Laica</h1>
+                    <p>Los huskys necesitan actividad</p>
                 </section>
 
                 <section class="cardOptions">
-                    <button class="delete">Borrar</button>
-                    <button class="edit">Editar</button>
+                    <button onclick="vewCard()" class="info" id="info">Ver</button>
+                    <button onclick="deleteModal()" class="delete" id="delete">Borrar</button>
                 </section>
-
             </div>
-            <div class="card">
-
+            <div class="task" id="task-2">
                 <section class="cardData">
-                    <h1>cena con Lara</h1>
-                    <p>Una cena con Lara</p>
+                    <h1>Sacar a Laica</h1>
+                    <p>Los huskys necesitan actividad</p>
                 </section>
 
                 <section class="cardOptions">
-                    <button class="delete">Borrar</button>
-                    <button class="edit">Editar</button>
+                    <button onclick="vewCard()" class="info" id="info">Ver</button>
+                    <button onclick="deleteModal()" class="delete" id="delete">Borrar</button>
                 </section>
-
             </div>
-            <div class="card">
-
+            <div class="task" id="task-3">
                 <section class="cardData">
-                    <h1>cena con Lara</h1>
-                    <p>Una cena con Lara</p>
+                    <h1>Sacar a Laica</h1>
+                    <p>Los huskys necesitan actividad</p>
                 </section>
 
                 <section class="cardOptions">
-                    <button class="delete">Borrar</button>
-                    <button class="edit">Editar</button>
+                    <button onclick="vewCard()" class="info" id="info">Ver</button>
+                    <button onclick="deleteModal()" class="delete" id="delete">Borrar</button>
+                </section>
+            </div>
+
+            <div class="event" id="event-1">
+                <section class="cardData">
+                    <h1>Cumple de Tomy</h1>
+                    <p>Tomy cumple 25 años</p>
                 </section>
 
-            </div>
-            <div class="card">
-
-                <section class="cardData">
-                    <h1>cena con Lara</h1>
-                    <p>Una cena con Lara</p>
+                <section class="cardDate">
+                    <h1>12/05</h1>
                 </section>
 
                 <section class="cardOptions">
-                    <button class="delete">Borrar</button>
-                    <button class="edit">Editar</button>
+                    <button onclick="vewCard()" class="info" id="info">Ver</button>
+                    <button onclick="deleteModal()" class="delete" id="delete">Borrar</button>
+                </section>
+            </div>
+            <div class="event" id="event-2">
+                <section class="cardData">
+                    <h1>Cumple de Tomy</h1>
+                    <p>Tomy cumple 25 años</p>
                 </section>
 
-            </div>
-            <div class="card">
-
-                <section class="cardData">
-                    <h1>cena con Lara</h1>
-                    <p>Una cena con Lara</p>
+                <section class="cardDate">
+                    <h1>12/05</h1>
                 </section>
 
                 <section class="cardOptions">
-                    <button class="delete">Borrar</button>
-                    <button class="edit">Editar</button>
+                    <button onclick="vewCard()" class="info" id="info">Ver</button>
+                    <button onclick="deleteModal()" class="delete" id="delete">Borrar</button>
+                </section>
+            </div>
+            <div class="event" id="event-3">
+                <section class="cardData">
+                    <h1>Cumple de Tomy</h1>
+                    <p>Tomy cumple 25 años</p>
                 </section>
 
-            </div>
-            <div class="card">
-
-                <section class="cardData">
-                    <h1>cena con Lara</h1>
-                    <p>Una cena con Lara</p>
+                <section class="cardDate">
+                    <h1>12/05</h1>
                 </section>
 
                 <section class="cardOptions">
-                    <button class="delete">Borrar</button>
-                    <button class="edit">Editar</button>
+                    <button onclick="vewCard()" class="info" id="info">Ver</button>
+                    <button onclick="deleteModal()" class="delete" id="delete">Borrar</button>
+                </section>
+            </div>
+
+            <div class="list" id="list-1">
+                <section class="cardData">
+                    <h1>Ir al super</h1>
                 </section>
 
-            </div>
-            <div class="card">
-
                 <section class="cardData">
-                    <h1>cena con Lara</h1>
-                    <p>Una cena con Lara</p>
+                    <li>12 huevo</li>
+                    <li>1 leche</li>
+                    <li>3 manzanas</li>
+                    <li>alimento Laica</li>
+                    <li>pasta dental</li>
                 </section>
 
                 <section class="cardOptions">
-                    <button class="delete">Borrar</button>
-                    <button class="edit">Editar</button>
+                    <button onclick="vewCard()" class="info" id="info">Ver</button>
+                    <button onclick="deleteModal()" class="delete" id="delete">Borrar</button>
+                </section>
+            </div>
+            <div class="list" id="list-2">
+                <section class="cardData">
+                    <h1>Ir al super</h1>
                 </section>
 
-            </div>
-            <div class="card">
-
                 <section class="cardData">
-                    <h1>cena con Lara</h1>
-                    <p>Una cena con Lara</p>
+                    <li>12 huevo</li>
+                    <li>1 leche</li>
+                    <li>3 manzanas</li>
+                    <li>alimento Laica</li>
+                    <li>pasta dental</li>
                 </section>
 
                 <section class="cardOptions">
-                    <button class="delete">Borrar</button>
-                    <button class="edit">Editar</button>
+                    <button onclick="vewCard()" class="info" id="info">Ver</button>
+                    <button onclick="deleteModal()" class="delete" id="delete">Borrar</button>
+                </section>
+            </div>
+            <div class="list" id="list-3">
+                <section class="cardData">
+                    <h1>Ir al super</h1>
                 </section>
 
-            </div>
-            <div class="card">
-
                 <section class="cardData">
-                    <h1>cena con Lara</h1>
-                    <p>Una cena con Lara</p>
+                    <li>12 huevo</li>
+                    <li>1 leche</li>
+                    <li>3 manzanas</li>
+                    <li>alimento Laica</li>
+                    <li>pasta dental</li>
                 </section>
 
                 <section class="cardOptions">
-                    <button class="delete">Borrar</button>
-                    <button class="edit">Editar</button>
+                    <button onclick="vewCard()" class="info" id="info">Ver</button>
+                    <button onclick="deleteModal()" class="delete" id="delete">Borrar</button>
                 </section>
-
             </div>
+
+
         </section>
     </section>
 

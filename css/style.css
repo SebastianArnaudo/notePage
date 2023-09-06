@@ -6,13 +6,23 @@
 }
 
 body{
-    overflow-y:hidden;
+    overflow-y:auto;
     align-items: center;
     justify-content: center;
     text-align: center;
     width: 100%;
     min-height: 100vh;
     background: linear-gradient(to right bottom, rgb(187, 60, 2) 20%,rgb(156, 43, 43) 70%);
+}
+
+body::-webkit-scrollbar{
+    width: 7px;
+    background:rgb(156, 43, 43) ;
+}
+
+body::-webkit-scrollbar-thumb{
+    background-color: rgb(255, 115, 0);
+    border-radius: 5px;
 }
 
 nav{
@@ -40,6 +50,73 @@ nav{
     }
 }
 
+/* modal */
+.modalContenedor{
+    display: flex;
+    box-sizing: border-box;
+    z-index: 2;
+
+    .modal{
+        display: none;
+        align-items: center;
+        justify-content: center;
+        top: 0;
+        z-index: 2;
+        left: 0;
+        position:absolute;
+        width: 100%;
+        min-height: 100vh;
+        background:rgba(223, 184, 158, 0.418);
+    }
+    
+    .modalContenido{
+        margin: auto;
+        background: rgb(238, 231, 231);
+        padding: 10px;
+        text-align: center;
+        height: auto;
+        width: 40%;
+    }
+
+    .confirmDelete, .cancelDelete, .closeButton{
+        font-size: 20px;
+        color:black;
+        height: 10%;
+        width: 30%;
+        margin: 2%;
+        cursor: pointer;
+        border:2px solid;
+        transition: color, border, border-color, background 1s;
+    }
+    .confirmDelete:hover, .cancelDelete:hover, .closeButton:hover{
+        color: white;
+        border:2px solid;
+        transition: color, border, border-color, background 1s;
+    }
+
+    .confirmDelete{
+        background-color: rgba(228, 15, 15, 0.932);
+        border-color:rgba(228, 15, 15, 0.932);
+        box-shadow: 5px 3px 5px rgb(131, 2, 2)
+    }
+    .confirmDelete:hover{
+        background-color: rgba(167, 5, 5, 0.932);        
+        border-color:rgba(167, 5, 5, 0.932);
+    }
+
+    .cancelDelete, .closeButton{
+        background-color: rgb(248, 149, 0);
+        border-color:rgb(248, 149, 0);
+        box-shadow: 5px 3px 5px rgb(185, 111, 0);
+    }
+
+    .cancelDelete:hover, .closeButton:hover{
+        background-color: white;
+        color:rgb(248, 149, 0);
+    }
+}
+
+/* contenedor proncipal */
 .maincontainer{
     height: 100vh;
     width: 100%;
@@ -47,12 +124,13 @@ nav{
     grid-template-columns:repeat(2,1fr);
 }
 
+/* bandeja de ingeso de tarjeta*/
 .insertCard{
     display: flex;
     margin: 5% 20% 0 5%;
     min-width: 30%;
-    height: 30%;
-    min-height: 70%;
+    height: 35%;
+    min-height: 75%;
     align-items: left;
     justify-content: center;
     text-align: center;
@@ -61,13 +139,56 @@ nav{
 }
 
 form{
+
     display: block;
     margin: 5%;
     width: 90%;
     height: 90%;
     min-width: 30%;
-    min-height: 30%;
+    min-height: 40%;
     
+    /* Selector de tipo de notas */
+    .checkContainer{
+        margin: 2%;
+        display: block;
+        align-items: center;
+        text-align: center;
+    
+        
+    
+        .check{
+            cursor: pointer;
+            background: rgb(238, 231, 231);
+            border: 3px solid rgb(238, 231, 231);
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            appearance: none;
+        }
+    
+        .check:checked{
+            background-color: rgb(199, 64, 2);
+        }
+    }
+
+    /* Contenedores de tipo de notas */
+    #conteinerTask{
+        display: block;
+    }
+    #conteinerEvent{
+        display: none;
+    }
+
+    #conteinerList{
+        display: none;
+    }
+
+    /* Inputs formulario */
+
+    .titleInput, input,textarea:focus{
+        outline: none;
+    }
+
     .titleInput{
         background: rgb(238, 231, 231);
         box-shadow: 5px 3px 5px rgb(99, 33, 2);
@@ -79,24 +200,56 @@ form{
         text-align: center;
     }
 
-    .descriptionTask{
+    .itemList{
         background: rgb(238, 231, 231);
         box-shadow: 5px 3px 5px rgb(99, 33, 2);
         border: 0;
-        margin: 5%;
-        width: 90%;
-        height: 90%;
-        min-width: 30%;
-        min-height: 30%;
-        padding: 2%;
+        margin: 2%;
+        width: 70%;
+        min-width: 20%;
+        padding: 1%;
         text-align: center;
     }
+    
+    /* estilos compartidos, salvo el tamaño */
+    .descriptionTask, .eventDesc{
+        background: rgb(238, 231, 231);
+        box-shadow: 5px 3px 5px rgb(99, 33, 2);
+        border: 0;
+        width: 90%;
+        min-width: 30%;
+        padding: 2%;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+    .descriptionTask{
+        margin: 5%;
+        height: 10%;
+        min-height: 30%;
+    }
+    .eventDesc{
+        height: 50%;
+        min-height: 20%;
+        margin: 5%;
+        padding: 0;
+    }
 
-    .titleInput,.descriptionTask:focus{
+    /* fecha de event */
+    .dateEvent{
+        text-align: center;
+        font-family: roboto;
+        background: rgb(238, 231, 231);
+        padding: 2%;
+        width: 50%;
+        border: 0;
+        box-shadow: 5px 3px 5px rgb(99, 33, 2);
         outline: none;
     }
 
+    /* Botones */
     .formButton{
+        margin: 2%;
         height: 10%;
         width: 30%;
         background-color: rgba(255, 145, 0, 0.932);
@@ -109,16 +262,17 @@ form{
     .formButton:hover{
         background-color: rgba(255, 60, 0, 0.932);        
         border:2px solid;
-        border-color:rgba(255, 145, 0, 0.932);
+        border-color:rgba(218, 53, 3, 0.932);
         transition: border, border-color, background 1s;
     }
 }
 
+/* bandeja de tarjeta */
 .cardTable{
     margin: 15% 0 0 0;
     padding: 2%;
     display: block;
-    overflow-y: auto;
+    overflow-y: scroll;
     min-width: 30%;
     width: 90%;
     height: 30%;
@@ -130,7 +284,17 @@ form{
     box-shadow: 5px 5px 5px rgb(65, 20, 1);
 }
 
-.card{
+.cardTable::-webkit-scrollbar{
+    width: 7px;
+}
+
+.cardTable::-webkit-scrollbar-thumb{
+    background-color: rgb(255, 115, 0);
+    border-radius: 5px;
+}
+
+/* tipos de tarjeta */
+.task, .event, .list{
     padding: 2%;
     margin: 2% 1.5% 2% 1.5%;
     align-items: center;
@@ -140,43 +304,53 @@ form{
     grid-template-columns:repeat(2,1fr);
     background: rgb(238, 231, 231);
 
-    .delete{
+    .info, .delete{
+        font-size: 20px;
         color:black;
         height: 10%;
         width: 30%;
         margin: 2%;
         cursor: pointer;
-        background-color: rgba(255, 0, 0, 0.932);
         border:2px solid;
-        border-color:rgba(255, 0, 0, 0.932);
-        box-shadow: 5px 3px 5px rgb(99, 33, 2);
-        transition: color, border, border-color, background 1s;
-    }
-    .delete:hover{
-        color: white;
-        background-color: rgba(187, 14, 14, 0.932);        
-        border:2px solid;
-        border-color:rgba(255, 0, 0, 0.932);
         transition: color, border, border-color, background 1s;
     }
 
-    .edit{        
-        color:black;
-        height: 10%;
-        width: 30%;
-        margin: 2%;
-        cursor: pointer;
-        background-color: rgba(162, 0, 255, 0.932);
-        border:2px solid;
-        border-color:rgba(162, 0, 255, 0.932);
-        box-shadow: 5px 3px 5px rgb(80, 2, 99);
-        transition: color, border, border-color, background 1s;
-    }
-    .edit:hover{
+    .info:hover, .delete:hover{
         color: white;
-        background-color: rgba(81, 7, 124, 0.932);
         border:2px solid;
-        border-color:rgba(162, 0, 255, 0.932);
         transition: color, border, border-color, background 1s;
     }
+
+    .delete{
+        background-color: rgba(228, 15, 15, 0.932);
+        border-color:rgba(228, 15, 15, 0.932);
+        box-shadow: 5px 3px 5px rgb(131, 2, 2)
+    }
+    .delete:hover{
+        background-color: rgba(167, 5, 5, 0.932);        
+        border-color:rgba(167, 5, 5, 0.932);
+    }
+
+    .info{
+        background-color: rgb(199, 2, 117);
+        border-color:rgb(199, 2, 117);
+        box-shadow: 5px 3px 5px rgb(131, 2, 77)
+    }
+    .info:hover{
+        background-color: rgba(81, 7, 124, 0.932);
+        border-color:rgba(81, 7, 124, 0.932);
+    }
+}
+
+.event,.list{
+    grid-template-columns:repeat(3,1fr);
+
+    .info, .delete{
+        font-size: 15px;
+    }
+
+}
+
+.cardHidden{
+    display: none;
 }
