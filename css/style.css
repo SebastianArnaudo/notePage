@@ -34,7 +34,7 @@ nav{
     justify-content: left;
     text-align: center;
 
-    .navButton{
+    .navButton, .active{
         font-size: 25px;
         margin: 0 2%;
         min-height: 100%;
@@ -48,34 +48,80 @@ nav{
         color: rgba(255, 145, 0, 0.932);
         transition: color 1s;
     }
+
+    .active{
+        color: rgba(255, 145, 0, 0.932);
+    }
 }
 
-/* modal */
-.modalContenedor{
-    display: flex;
+.modalContainer{
+    position: fixed;
+    display: none;
     box-sizing: border-box;
     z-index: 2;
-
-    .modal{
-        display: none;
-        align-items: center;
-        justify-content: center;
-        top: 0;
-        z-index: 2;
-        left: 0;
-        position:absolute;
-        width: 100%;
-        min-height: 100vh;
-        background:rgba(223, 184, 158, 0.418);
-    }
+    top:0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    background:rgba(223, 184, 158, 0.418);
+    pointer-events: all;
     
-    .modalContenido{
+    .modal{
+        pointer-events: all;
         margin: auto;
-        background: rgb(238, 231, 231);
+        background: linear-gradient(to left top, rgb(247, 1, 1) 20%, rgb(255, 85, 0) 70%);
         padding: 10px;
         text-align: center;
         height: auto;
         width: 40%;
+    }
+
+    .modalContent{
+        background: rgb(238, 231, 231);
+        padding: 2%;
+        margin: 5%;
+    }
+
+    .cardContent{
+        background: none;
+    }
+
+    .title,.titleGrid{
+        text-align: center;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2%;
+        height: 100%;
+        width: 100%;
+        background: rgb(238, 231, 231);
+        margin :0 0 2% 0;
+        box-shadow: 5px 3px 5px rgb(99, 33, 2);
+
+    }
+
+    .titleGrid{
+        display: grid;
+        grid-template-columns:repeat(2,1fr);
+        gap: 5rem;
+        box-shadow: 5px 3px 5px rgb(99, 33, 2);
+
+    }
+
+    .descrip,.descripList{
+        background: rgb(238, 231, 231);
+        padding: 2%;
+        height: 100%;
+        width: 100%;
+        box-shadow: 5px 3px 5px rgb(99, 33, 2);
+    }
+
+    .descrip{
+        display: none;
+    }
+    .descripList{
+        display: block;
     }
 
     .confirmDelete, .cancelDelete, .closeButton{
@@ -115,6 +161,7 @@ nav{
         color:rgb(248, 149, 0);
     }
 }
+
 
 /* contenedor proncipal */
 .maincontainer{
@@ -172,14 +219,14 @@ form{
     }
 
     /* Contenedores de tipo de notas */
-    #conteinerTask{
+    #containerTask{
         display: block;
     }
-    #conteinerEvent{
+    #containerEvent{
         display: none;
     }
 
-    #conteinerList{
+    #containerList{
         display: none;
     }
 
@@ -257,13 +304,14 @@ form{
         border:2px solid;
         border-color:rgba(255, 145, 0, 0.932);
         box-shadow: 5px 3px 5px rgb(99, 33, 2);
-        transition: border, border-color, background 1s;
+        transition: border, border-color, background, box-shadow 1s;
     }
     .formButton:hover{
-        background-color: rgba(255, 60, 0, 0.932);        
         border:2px solid;
         border-color:rgba(218, 53, 3, 0.932);
-        transition: border, border-color, background 1s;
+        background-color: rgba(255, 60, 0, 0.932);        
+        box-shadow:  5px 3px 15px rgb(99, 33, 2), -5px -3px 15px rgb(99, 33, 2);
+        transition: border, border-color, background, box-shadow 1s;
     }
 }
 
@@ -282,6 +330,7 @@ form{
     text-align: center;
     background: linear-gradient(to left top, rgb(247, 1, 1) 20%, rgb(255, 85, 0) 70%);
     box-shadow: 5px 5px 5px rgb(65, 20, 1);
+
 }
 
 .cardTable::-webkit-scrollbar{
@@ -303,6 +352,7 @@ form{
     display: grid;
     grid-template-columns:repeat(2,1fr);
     background: rgb(238, 231, 231);
+    pointer-events: none;
 
     .info, .delete{
         font-size: 20px;
@@ -313,6 +363,7 @@ form{
         cursor: pointer;
         border:2px solid;
         transition: color, border, border-color, background 1s;
+        pointer-events: all;
     }
 
     .info:hover, .delete:hover{
