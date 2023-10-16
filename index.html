@@ -17,20 +17,6 @@
 
     <!-- Modals -->
 
-    <section class="modalContainer" id="modalContainer">
-        <div class="modal" id="modalDelete"> 
-            <section class="modalContent" id="modalContent">
-                <h1>Advertencia</h1>
-
-                <h3 id="titleDeleteM"></h3>
-            </section>
-            <section class="buttons">
-                <button class="confirmDelete" id="confirmDelete">Borrar</button>
-                <button class="cancelDelete" id="cancelDelete">Cancelar</button>
-            </section>
-        </div>
-    </section>
-
     <section class="modalContainer" id="modalCardContainer">
         <div class="modal" id="modalCard"> 
             <section class="modalContent cardContent" id="modalContent">
@@ -71,7 +57,7 @@
 
                 <div class="checkContainer">
                     <label for="typeEvent">Seleccione el tipo de evento:</label> <br>
-                    Tarea <input type="radio" checked class="check" name="typeEvent" id="task"> 
+                    Tarea <input type="radio" class="check" name="typeEvent" id="task" checked> 
                     Evento <input type="radio" class="check" name="typeEvent" id="event"> 
                     Lista <input type="radio" class="check" name="typeEvent" id="list">
                 </div>
@@ -114,9 +100,8 @@
         
         <!-- Bandeja de notas -->
         <section class="cardTable" id="cardTable">
-
-            
-            <div class="task" id="task-1">
+                        
+            <div class= "task card" id="task-1">
                 <section class="cardData">
                     <h1>Sacar a Laica</h1>
                     <p>Los huskys necesitan actividad</p>
@@ -124,33 +109,11 @@
 
                 <section class="cardOptions">
                     <button  class="info" id="info">Ver</button>
-                    <button  class="delete" id="delete">Borrar</button>
-                </section>
-            </div>
-            <div class="task" id="task-2">
-                <section class="cardData">
-                    <h1>Sacar a Laica</h1>
-                    <p>Los huskys necesitan actividad</p>
-                </section>
-
-                <section class="cardOptions">
-                    <button class="info" id="info">Ver</button>
-                    <button class="delete" id="delete">Borrar</button>
-                </section>
-            </div>
-            <div class="task" id="task-3">
-                <section class="cardData">
-                    <h1>Sacar a Laica</h1>
-                    <p>Los huskys necesitan actividad</p>
-                </section>
-
-                <section class="cardOptions">
-                    <button class="info" id="info">Ver</button>
-                    <button class="delete" id="delete">Borrar</button>
+                    <button  class="delete" id="delete">X</button>
                 </section>
             </div>
 
-            <div class="event" id="event-1">
+            <div class= "event card" id="event-1">
                 <section class="cardData">
                     <h1>Cumple de Tomy</h1>
                     <p>Tomy cumple 25 años</p>
@@ -162,46 +125,16 @@
 
                 <section class="cardOptions">
                     <button  class="info" id="info">Ver</button>
-                    <button  class="delete" id="delete">Borrar</button>
+                    <button  class="delete" id="delete">X</button>
                 </section>
             </div>
-            <div class="event" id="event-2">
-                <section class="cardData">
-                    <h1>Cumple de Tomy</h1>
-                    <p>Tomy cumple 25 años</p>
-                </section>
 
-                <section class="cardDate">
-                    <h1>12/05</h1>
-                </section>
-
-                <section class="cardOptions">
-                    <button class="info" id="info">Ver</button>
-                    <button class="delete" id="delete">Borrar</button>
-                </section>
-            </div> 
-            <div class="event" id="event-3">
-                <section class="cardData">
-                    <h1>Cumple de Tomy</h1>
-                    <p>Tomy cumple 25 años</p>
-                </section>
-
-                <section class="cardDate">
-                    <h1>12/05</h1>
-                </section>
-
-                <section class="cardOptions">
-                    <button class="info" id="info">Ver</button>
-                    <button class="delete" id="delete">Borrar</button>
-                </section>
-            </div> 
-
-            <div class="list" id="list-1">
+            <div class= "list card" id="list-1">
                 <section class="cardData">
                     <h1>Ir al super</h1>
                 </section>
 
-                <section class="cardData">
+                <section class="cardItems">
                     <li>12 huevo</li>
                     <li>1 leche</li>
                     <li>3 manzanas</li>
@@ -211,46 +144,9 @@
 
                 <section class="cardOptions">
                     <button class="info" id="info">Ver</button>
-                    <button class="delete" id="delete">Borrar</button>
+                    <button class="delete" id="delete">X</button>
                 </section>
             </div>
-            <div class="list" id="list-2">
-                <section class="cardData">
-                    <h1>Ir al super</h1>
-                </section>
-
-                <section class="cardData">
-                    <li>12 huevo</li>
-                    <li>1 leche</li>
-                    <li>3 manzanas</li>
-                    <li>alimento Laica</li>
-                    <li>pasta dental</li>
-                </section>
-
-                <section class="cardOptions">
-                    <button class="info" id="info">Ver</button>
-                    <button class="delete" id="delete">Borrar</button>
-                </section>
-            </div>
-            <div class="list" id="list-3">
-                <section class="cardData">
-                    <h1>Ir al super</h1>
-                </section>
-
-                <section class="cardData">
-                    <li class="item">12 huevo</li>
-                    <li class="item">1 leche</li>
-                    <li class="item">3 manzanas</li>
-                    <li class="item">alimento Laica</li>
-                    <li class="item">pasta dental</li>
-                </section>
-
-                <section class="cardOptions">
-                    <button class="info" id="info">Ver</button>
-                    <button class="delete" id="delete">Borrar</button>
-                </section>
-            </div>
-
 
         </section>
     </section>

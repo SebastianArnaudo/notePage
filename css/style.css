@@ -33,6 +33,7 @@ nav{
     align-items: center;
     justify-content: left;
     text-align: center;
+    
 
     .navButton, .active{
         font-size: 25px;
@@ -40,17 +41,25 @@ nav{
         min-height: 100%;
         background: none;
         border: none;
+        border-color: none;
         cursor: pointer;
         color: rgb(238, 231, 231);
-        transition: color 1s;
+        transition: color, border-top, border-bottom, border-color, 1s;
     }
     .navButton:hover{
         color: rgba(255, 145, 0, 0.932);
-        transition: color 1s;
+        border-top:4px solid;
+        border-bottom: 4px solid;
+        border-color:rgb(230, 130, 0);
+        transition: color, border-top, border-bottom, border-color, 1s;
     }
 
     .active{
         color: rgba(255, 145, 0, 0.932);
+        border-top:4px solid;
+        border-bottom: 4px solid;
+        border-color:rgb(230, 130, 0);
+
     }
 }
 
@@ -98,7 +107,6 @@ nav{
         background: rgb(238, 231, 231);
         margin :0 0 2% 0;
         box-shadow: 5px 3px 5px rgb(99, 33, 2);
-
     }
 
     .titleGrid{
@@ -106,7 +114,6 @@ nav{
         grid-template-columns:repeat(2,1fr);
         gap: 5rem;
         box-shadow: 5px 3px 5px rgb(99, 33, 2);
-
     }
 
     .descrip,.descripList{
@@ -296,6 +303,7 @@ form{
 
     /* Botones */
     .formButton{
+        color: rgb(255, 255, 255);
         margin: 2%;
         height: 10%;
         width: 30%;
@@ -304,14 +312,15 @@ form{
         border:2px solid;
         border-color:rgba(255, 145, 0, 0.932);
         box-shadow: 5px 3px 5px rgb(99, 33, 2);
-        transition: border, border-color, background, box-shadow 1s;
+        transition: border, border-color, background, box-shadow, 1s;
     }
     .formButton:hover{
         border:2px solid;
         border-color:rgba(218, 53, 3, 0.932);
-        background-color: rgba(255, 60, 0, 0.932);        
-        box-shadow:  5px 3px 15px rgb(99, 33, 2), -5px -3px 15px rgb(99, 33, 2);
-        transition: border, border-color, background, box-shadow 1s;
+        color: rgba(255, 60, 0, 0.932);      
+        background-color: white;
+        box-shadow: inset 5px 3px 5px  rgb(99, 33, 2);
+        transition: border, border-color, background, box-shadow, 1s;
     }
 }
 
@@ -330,7 +339,6 @@ form{
     text-align: center;
     background: linear-gradient(to left top, rgb(247, 1, 1) 20%, rgb(255, 85, 0) 70%);
     box-shadow: 5px 5px 5px rgb(65, 20, 1);
-
 }
 
 .cardTable::-webkit-scrollbar{
@@ -355,21 +363,23 @@ form{
     pointer-events: none;
 
     .info, .delete{
-        font-size: 20px;
-        color:black;
+        font-size:15px;
+        color:white;
         height: 10%;
         width: 30%;
         margin: 2%;
         cursor: pointer;
         border:2px solid;
-        transition: color, border, border-color, background 1s;
+        transition: color, border, border-color, box-shadow, background 1s;
         pointer-events: all;
     }
+    
+    
 
     .info:hover, .delete:hover{
         color: white;
         border:2px solid;
-        transition: color, border, border-color, background 1s;
+        transition: color, border, border-color, box-shadow, background 1s;
     }
 
     .delete{
@@ -378,8 +388,10 @@ form{
         box-shadow: 5px 3px 5px rgb(131, 2, 2)
     }
     .delete:hover{
-        background-color: rgba(167, 5, 5, 0.932);        
+        color: rgba(167, 5, 5, 0.932);
+        background-color: white;
         border-color:rgba(167, 5, 5, 0.932);
+        box-shadow: inset 5px 3px 5px rgb(131, 2, 2)
     }
 
     .info{
@@ -388,7 +400,9 @@ form{
         box-shadow: 5px 3px 5px rgb(131, 2, 77)
     }
     .info:hover{
-        background-color: rgba(81, 7, 124, 0.932);
+        color: rgba(81, 7, 124, 0.932);
+        background-color: white;
+        box-shadow: inset 5px 3px 5px rgb(131, 2, 77);
         border-color:rgba(81, 7, 124, 0.932);
     }
 }
