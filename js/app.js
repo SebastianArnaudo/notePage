@@ -295,7 +295,8 @@ saveButton.addEventListener("click",(e)=>{
             alert("No se permiten campos vacios")
             
         } else{
-            createTask(title,tInfo)
+            let date = "";
+            createCard(title,tInfo,date)
         }
     } 
     else if(checkEvent){
@@ -331,26 +332,23 @@ saveButton.addEventListener("click",(e)=>{
 
 /* CREAR TARJETAS */
 
-function createTask(title,desc){
+function createCard(title,desc,date){
+    const t = title;
+    const d = desc;
 
-    const t = title
-    const d = desc
-
-    const bit= "Ver"
-    const bdt= "X"
+    const bit= "Ver";
+    const bdt= "X";
 
     const card = document.createElement("div");
     const cardD = document.createElement("section");
     const cardO = document.createElement("section");
+    const cardDel = document.createElement("section");
 
-    const btnI = document.createElement("button")
-    const btnD = document.createElement("button")
+    const btnI = document.createElement("button");
+    const btnD = document.createElement("button");
 
     const h1 = document.createElement("h1");
-    const p = document.createElement("p")
-
     h1.textContent=t;
-    p.textContent=d;
 
     btnI.textContent=bit;
     btnD.textContent=bdt;
@@ -358,7 +356,8 @@ function createTask(title,desc){
     card.setAttribute("class","task");
     card.classList.add("card");
     cardD.setAttribute("class","cardData");
-    cardO.setAttribute("class","cardOption");
+    cardO.setAttribute("class","cardVew");
+    cardDel.setAttribute("class","deleterCard");
 
     btnI.setAttribute("class","info");
     btnD.setAttribute("class","delete");
@@ -367,13 +366,46 @@ function createTask(title,desc){
     btnD.setAttribute("id", "delete");
 
     cardD.appendChild(h1);
-    cardD.appendChild(p);
 
     cardO.appendChild(btnI);
-    cardO.appendChild(btnD);
+    cardDel.appendChild(btnD);
 
-    card.appendChild(cardD);
+    card.appendChild(cardD)
+    
+    if(date == "list"){
+        const cardI = document.createElement("section");
+        cardI.setAttribute("class","cardItems");
+
+        for(let itemL = 0; itemL < desc.length; itemL++){
+            let item;
+            item = document.createElement("li");
+            cardI.appendChild(item)
+            item.innerHTML += desc[itemL];
+        }
+        card.appendChild(cardI)
+        card.setAttribute("class","list");
+        card.classList.add("card");
+    }
+    else if (date == ""){
+        const p = document.createElement("p");
+        p.textContent=d;
+        cardD.appendChild(p);
+        card.appendChild(cardD);
+    }
+    else if (date != "list"){
+        const p = document.createElement("p");
+        p.textContent=d;
+        cardD.appendChild(p);
+        card.appendChild(cardD);
+
+        card.appendChild(date);
+        card.setAttribute("class","event");
+        card.classList.add("card");
+    }
+    
+    
     card.appendChild(cardO);
+    card.appendChild(cardDel);
 
     cards.appendChild(card);
 
@@ -382,63 +414,22 @@ function createTask(title,desc){
 }
 
 function createEvent(title,desc,date){
-
-    const t = title
-    const de = desc
-    const da = date
+    
+    const da = date;
 
     let dateValid = da.split("");
-    let d = Number(dateValid[8] + dateValid[9])
-    let m = Number(dateValid[5] + dateValid[6])
+    let d = Number(dateValid[8] + dateValid[9]);
+    let m = Number(dateValid[5] + dateValid[6]);
 
-    dateValid= [d +"/"+ m]
+    dateValid= [d +"/"+ m];
 
-    const bit= "Ver"
-    const bdt= "X"
-
-    const card = document.createElement("div");
-    const cardD = document.createElement("section");
-    const cardO = document.createElement("section");
-    const cardDate = document.createElement("section")
-
-    const btnI = document.createElement("button")
-    const btnD = document.createElement("button")
-
-    const h1 = document.createElement("h1");
-    const p = document.createElement("p");
+    const cardDate = document.createElement("section");
     const dat = document.createElement("h1");
 
-    h1.textContent=t;
-    p.textContent=de;
     dat.textContent=dateValid;
-
-    btnI.textContent=bit;
-    btnD.textContent=bdt;
-
-    card.setAttribute("class","event");
-    card.classList.add("card");
-    cardD.setAttribute("class","cardData");
-    cardO.setAttribute("class","cardOption");
-
-    btnI.setAttribute("class","info");
-    btnD.setAttribute("class","delete");
-
-    btnI.setAttribute("id", "info");
-    btnD.setAttribute("id", "delete");
-
-    cardD.appendChild(h1);
-    cardD.appendChild(p);
-
     cardDate.appendChild(dat);
 
-    cardO.appendChild(btnI);
-    cardO.appendChild(btnD);
-
-    card.appendChild(cardD);
-    card.appendChild(cardDate);
-    card.appendChild(cardO);
-    
-    cards.appendChild(card);
+    createCard(title,desc,cardDate);
 
     titleCard.value = "";
     eventI.value = "";
@@ -446,64 +437,20 @@ function createEvent(title,desc,date){
 }
 
 function createList(title,itemS){
-    const t = title
-    const i = itemS
-
-    const bit= "Ver"
-    const bdt= "X"
-
-    const card = document.createElement("div");
-    const cardD = document.createElement("section");
+    const i = itemS;
     const cardI = document.createElement("section");
-    const cardO = document.createElement("section");
+    cardI.setAttribute("class","cardItems");
 
-    const btnI = document.createElement("button")
-    const btnD = document.createElement("button")
-
-    const h1 = document.createElement("h1");
-
-    
-    h1.textContent=t;
-
-
-    btnI.textContent=bit;
-    btnD.textContent=bdt;
-
-
-
-    card.setAttribute("class","list");
-    card.classList.add("card");
-    cardD.setAttribute("class","cardData");
-    cardI.setAttribute("clas","cardItems")
-    cardO.setAttribute("class","cardOption");
-
-    btnI.setAttribute("class","info");
-    btnD.setAttribute("class","delete");
-
-    btnI.setAttribute("id","info");
-    btnD.setAttribute("id","delete");
-    
     for(let itemL = 0; itemL < i.length; itemL++){
-
         let item;
         item = document.createElement("li");
         cardI.appendChild(item)
         item.innerHTML += i[itemL];
     }
-    
-    cardD.appendChild(h1);
-    
 
-    cardO.appendChild(btnI);
-    cardO.appendChild(btnD);
-
-    card.appendChild(cardD);
-    card.appendChild(cardI);
-    card.appendChild(cardO);
-
-    cards.appendChild(card);
-
-    titleCard.value = "";
+    let items = cardI.innerText
+    let date = "list";
+    createCard(title, items, date);
 }
 
 /* BORRAR TARJETAS */
