@@ -1,4 +1,4 @@
-/* MODALS */
+//* MODALS *//
 const cards = document.getElementById("cardTable");
 const cardSection = document.getElementById("cardSection");
 
@@ -24,14 +24,14 @@ cards.addEventListener("click",(e)=>{
             vewTask(title,desc)
         } else if (typeCard == "list card"){
             const title= e.target.parentElement.parentElement.children[0].children[0].textContent;
-            const list= e.target.parentElement.parentElement.children[1].children;
+            const list= e.target.parentElement.parentElement.children[1].children[0];
 
             vewList(title,list)
         }
     }
 })
 
-// Ver tarea
+//* Ver tarea
 const modalVew = document.getElementById("modalCardContainer");
 
 const close = document.getElementById("closeButton");
@@ -82,31 +82,50 @@ function vewList(title,list){
     const descContainer = document.getElementById("descrip");
     const listModal = document.getElementById("descripList");
     const dateModal = document.getElementById("dateModal");
+    const itemsModal = document.getElementById("itemsModal");
 
+    const listElements = list.children;
     let count = 0;
-
-    const listItems= document.querySelectorAll("#listItem");
     
+
+    let liModal= []
+
+    for(i of listElements){
+        liModal.push(list.children[count].innerHTML)
+        count +=1
+    }
+
     
     modalVew.style.display="flex";
     descContainer.style.display="none";
     listModal.style.display="block";
     dateModal.style.display = "none";
 
-
     titleCModal.innerHTML = title;
 
-    for(let index of listItems){
-        index.innerHTML = list[count].innerHTML;
-        count += 1;
+
+    for(let index = 0; index < liModal.length; index++){
+        let li;
+        li = document.createElement("li");
+        
+        itemsModal.appendChild(li)
+        li.innerHTML += liModal[index]
+    }
+}
+
+function clearItemsModal() {
+    while (itemsModal.firstChild) {
+        itemsModal.removeChild(itemsModal.firstChild);
     }
 }
 
 function closeCard(){
+    clearItemsModal(); // Llama a la función para eliminar los elementos
     modalVew.style.display="none";
+
 }
 
-/* FILTRAR TARJETA */
+//* FILTRAR TARJETA *//
 
 const allFilter = document.getElementById("all");
 const taskFilter = document.getElementById("tasks");
@@ -117,6 +136,24 @@ allFilter.addEventListener("click",()=> filterAll());
 taskFilter.addEventListener("click",()=> filterTask());
 eventFilter.addEventListener("click",()=> filterEvent());
 listFilter.addEventListener("click",()=> filterList());
+
+function depureShow(){
+    const events = document.querySelectorAll(".event");
+    const lists = document.querySelectorAll(".list");
+    const tasks = document.querySelectorAll(".task");
+
+    for (let event = 0; event < events.length; event++) {
+        events[event].classList.remove("cardShow");
+    }
+
+    for (let list = 0; list < lists.length; list++) {
+        lists[list].classList.remove("cardShow");
+    }
+        
+    for (let task = 0; task < tasks.length; task++) {
+        tasks[task].classList.remove("cardShow");
+    }
+}
 
 function filterAll(){
     const events = document.querySelectorAll(".event");
@@ -130,19 +167,34 @@ function filterAll(){
     listFilter.classList.remove("active");
 
     for (let event = 0; event < events.length; event++) {
-        events[event].classList.remove("cardHidden")
+        if(events[event].classList.contains("cardFilted")){
+            setTimeout(() =>{
+                events[event].classList.replace("cardFilted","cardShow");
+            },900)
+        }
     }
 
     for (let list = 0; list < lists.length; list++) {
-        lists[list].classList.remove("cardHidden")
+        if(lists[list].classList.contains("cardFilted")){
+            setTimeout(() =>{
+                lists[list].classList.replace("cardFilted","cardShow");
+            },900)
+        }
     }
-
+        
     for (let task = 0; task < tasks.length; task++) {
-        tasks[task].classList.remove("cardHidden")
+        if(tasks[task].classList.contains("cardFilted")){
+            setTimeout(() =>{
+                tasks[task].classList.replace("cardFilted","cardShow");
+            },900)
+        }
     }
-    let ce = cardsElement.length
 
-    cardWatcher(ce)
+    setTimeout(depureShow,1500)
+    let ce = cardsElement.length;
+    let css = "all"
+
+    cardWatcher(ce,css);
 }
 
 function filterTask(){
@@ -150,27 +202,43 @@ function filterTask(){
     const lists = document.querySelectorAll(".list");
     const tasks = document.querySelectorAll(".task");
 
-
     allFilter.classList.remove("active");
     taskFilter.classList.add("active");
     eventFilter.classList.remove("active");
     listFilter.classList.remove("active");
 
-    let ce = tasks.length
+    let ce = tasks.length;
+    let css = "task"
 
     for (let event = 0; event < events.length; event++) {
-        events[event].classList.add("cardHidden")
+        if(!events[event].classList.contains("cardFilted")){
+            events[event].classList.add("cardHidden");
+            setTimeout(()=>{
+                events[event].classList.replace("cardHidden","cardFilted");
+            },900)
+        }
     }
 
     for (let list = 0; list < lists.length; list++) {
-        lists[list].classList.add("cardHidden")
+        if(!lists[list].classList.contains("cardFilted")){
+            lists[list].classList.add("cardHidden");
+            setTimeout(()=>{
+                lists[list].classList.replace("cardHidden","cardFilted");
+            },900)
+        }
     }
 
     for (let task = 0; task < tasks.length; task++) {
-        tasks[task].classList.remove("cardHidden")
+        if(tasks[task].classList.contains("cardFilted")){
+            setTimeout(()=>{
+                tasks[task].classList.replace("cardFilted","cardShow");
+            },900)
+            tasks[task].classList.remove("cardHidden");
+        }
     }
 
-    cardWatcher(ce)
+    setTimeout(depureShow,1500);
+    cardWatcher(ce,css)
 }
 
 function filterEvent(){
@@ -178,7 +246,9 @@ function filterEvent(){
     const lists = document.querySelectorAll(".list");
     const tasks = document.querySelectorAll(".task");
 
-    let ce = events.length
+    let ce = events.length;
+    let css = "event";
+
 
     allFilter.classList.remove("active");
     taskFilter.classList.remove("active");
@@ -186,18 +256,37 @@ function filterEvent(){
     listFilter.classList.remove("active");
 
     for (let event = 0; event < events.length; event++) {
-        events[event].classList.remove("cardHidden")
+        if(events[event].classList.contains("cardFilted")){
+
+            setTimeout(() =>{
+                events[event].classList.replace("cardFilted","cardShow");
+            },900)
+            events[event].classList.remove("cardHidden");
+        }
     }
 
     for (let list = 0; list < lists.length; list++) {
-        lists[list].classList.add("cardHidden")
+        if(!lists[list].classList.contains("cardFilted")){
+            lists[list].classList.add("cardHidden");
+
+            setTimeout(()=>{
+                lists[list].classList.replace("cardHidden","cardFilted");
+            },900)
+        }
     }
 
     for (let task = 0; task < tasks.length; task++) {
-        tasks[task].classList.add("cardHidden")
+        if(!tasks[task].classList.contains("cardFilted")){          
+            tasks[task].classList.add("cardHidden");
+
+            setTimeout(()=>{
+                tasks[task].classList.replace("cardHidden","cardFilted");
+            },900)
+        }
     }
 
-    cardWatcher(ce)
+    setTimeout(depureShow,1500);
+    cardWatcher(ce,css)
 }
 
 function filterList(){
@@ -206,6 +295,7 @@ function filterList(){
     const tasks = document.querySelectorAll(".task");
 
     let ce = lists.length
+    let css = "list";
 
     allFilter.classList.remove("active");
     taskFilter.classList.remove("active");
@@ -213,23 +303,42 @@ function filterList(){
     listFilter.classList.add("active");
 
     for (let event = 0; event < events.length; event++) {
-        events[event].classList.add("cardHidden")
+        if(!events[event].classList.contains("cardFilted")){
+            events[event].classList.add("cardHidden");
+
+            setTimeout(()=>{
+                events[event].classList.replace("cardHidden","cardFilted");
+            },900)
+        }
     }
 
     for (let list = 0; list < lists.length; list++) {
-        lists[list].classList.remove("cardHidden")
+        if(lists[list].classList.contains("cardFilted")){
+
+            setTimeout(()=>{
+                lists[list].classList.replace("cardFilted","cardShow");
+            },900)
+            lists[list].classList.remove("cardHidden");
+        }
     }
 
     for (let task = 0; task < tasks.length; task++) {
-        tasks[task].classList.add("cardHidden")
+        if(!tasks[task].classList.contains("cardFilted")){          
+            tasks[task].classList.add("cardHidden");
+
+            setTimeout(()=>{
+                tasks[task].classList.replace("cardHidden","cardFilted");
+            },900)
+        }
     }
 
-    cardWatcher(ce)
+    setTimeout(depureShow,1500);
+    cardWatcher(ce,css);
 }
 
-/* FORMULARIO */
+//* FORMULARIO *//
 
-// CAMBIAR DE FORMULARIO
+//* CAMBIAR DE FORMULARIO
 
 //Checkbox
 
@@ -239,46 +348,128 @@ const formList = document.getElementById("list");
 
 //Formularios
 
-const taskContent = document.getElementById("containerTask");
+const cardInfoContent = document.getElementById("containerTask");
 
-const eventDesc = document.getElementById("eventDescription");
-const eventDate = document.getElementById("dateEvent");
-
+const eventD = document.getElementById("dateEvent");
 const eventConten = document.getElementById("containerEvent");
+
 const listItems = document.getElementById("containerList");
+const lIF = document.querySelectorAll("#item");
+
+const cardInfo = document.getElementById("cardDescription");
+
+const itemImput = document.querySelectorAll(".itemList");
+
 
 formEvent.addEventListener("click",()=> changeToEvent());
 formList.addEventListener("click",()=> changeToList());
 formTask.addEventListener("click",()=> changeToTask());
 
+
 function changeToEvent(){
-    eventConten.style.display="block";
-    taskContent.style.display="none";
-    listItems.style.display="none";
+    if(!listItems.classList.contains("hidden")){
+        for (let i = 0; i < itemImput.length; i++) {
+            itemImput[i].classList.add("hiddenInputsList");
+        }
+        setTimeout(()=>{
+            for (let i = 0; i < itemImput.length; i++) {
+                itemImput[i].classList.replace("hiddenInputsList","liHidden");
+                listItems.classList.add("hidden");
+            }
+        },900)
+    }
+    
+    if(cardInfoContent.classList.contains("hidden")){
+        setTimeout(()=>{
+            cardInfoContent.classList.remove("hidden");
+            cardInfo.classList.replace("hidden","showInput");
+        },600)
+        setTimeout(()=>{
+            eventConten.classList.remove("hidden");
+            eventD.classList.replace("edHidden","showDate");
+        },900)
+    } else{
+        eventConten.classList.remove("hidden");
+        eventD.classList.replace("edHidden","showDate");
+    }
+    
+    setTimeout(()=>{
+        eventD.classList.remove("showDate");
+        cardInfo.classList.remove("showInput");
+    },1500)
 }
 
 function changeToTask(){
-    eventConten.style.display="none";
-    taskContent.style.display="block";
-    listItems.style.display="none";
+    if(!listItems.classList.contains("hidden")){
+        for (let i = 0; i < itemImput.length; i++) {
+            itemImput[i].classList.add("hiddenInputsList");
+        }
+        setTimeout(()=>{
+            for (let i = 0; i < itemImput.length; i++) {
+                itemImput[i].classList.replace("hiddenInputsList","liHidden");
+                listItems.classList.add("hidden");
+            }
+        },960)
+    }
+
+    if(!eventConten.classList.contains("hidden")){
+        eventD.classList.add("hiddenDate");
+        setTimeout(()=>{
+            eventD.classList.replace("hiddenDate","edHidden");
+            eventConten.classList.add("hiddenDate");
+            eventConten.classList.replace("hiddenDate","hidden");
+        },960)
+    }   
+
+    
+    setTimeout(()=>{
+        if(cardInfoContent.classList.contains("hidden")){
+            cardInfoContent.classList.remove("hidden");
+            cardInfo.classList.replace("hidden","showInput");            
+        }
+    },955)
+
+    setTimeout(() => {
+        cardInfo.classList.remove("showInput");
+    }, 1500);
+
 }
 
 function changeToList(){
-    eventConten.style.display="none";
-    taskContent.style.display="none";
-    listItems.style.display="block";
+
+    if(!eventConten.classList.contains("hidden")){
+        eventD.classList.add("hiddenDate");
+        setTimeout(()=>{
+            eventD.classList.replace("hiddenDate","edHidden");
+            eventConten.classList.add("hidden");
+        },960)
+    }   
+
+    cardInfo.classList.add("hiddenInput");
+    setTimeout(()=>{
+        cardInfoContent.classList.add("hidden");
+        cardInfo.classList.replace("hiddenInput","hidden");
+    },960)
+
+    setTimeout(()=>{
+        listItems.classList.remove("hidden");
+        for (let i = 0; i < itemImput.length; i++) {
+            itemImput[i].classList.replace("liHidden","showInputsList");
+        }
+        setTimeout(() => {
+            for (let i = 0; i < itemImput.length; i++) {
+                itemImput[i].classList.remove("showInputsList");
+            }
+        }, 950);
+    },955)
+
 }
 
-// VALIDAR FORMULAIO
+//* VALIDAR FORMULAIO
 
 const formCard = document.getElementById("formCard");
 
 const titleCard = document.getElementById("cardTitle");
-
-const taskInfo = document.getElementById("cardDescription");
-
-const eventI = document.getElementById("eventDescription");
-const eventD = document.getElementById("dateEvent");
 
 const itemL = document.querySelectorAll(".itemList").textContent;
 
@@ -293,55 +484,61 @@ saveButton.addEventListener("click",(e)=>{
 
     let title = titleCard.value;
     
-    let tInfo = taskInfo.value;
+    let tInfo = cardInfo.value;
 
-    let eInfo = eventI.value;
     let eDate = eventD.value;
 
     const listItems= document.querySelectorAll(".itemList");
 
-    
-    if(checkTask){
-        if(title == "" || tInfo == ""){
-            alert("No se permiten campos vacios");
-            
-        } else{
-            let date = "";
-            createCard(title,tInfo,date);
-        }
-    } 
-    else if(checkEvent){
-        if(title == "" || eInfo == "" || eDate == ""){
-            alert("No se permiten campos vacios");
-            
-        } else{
-            createEvent(title,eInfo,eDate);
-        }
-    } 
-    else{
-        let items = [];
-        let count = 0;
-
-        for(let itemL = 0; itemL < listItems.length; itemL++){
-            let i=listItems[count].value;
-            if(i != ""){
-                items.push(i);
+    switch (true) {
+        case checkTask:
+            if (title == "" || tInfo == "") {
+                alert("No se permiten campos vacios");
+            } else {
+                let date = "";
+                createCard(title, tInfo, date);
             }
-            count ++;
-        }
+            break;
+        case checkEvent:
+            if (title == "" || tInfo == "" || eDate == "") {
+                alert("No se permiten campos vacios");
+            } else {
+                createCard(title, tInfo, eDate);
 
-        if(title == ""){
-            alert("Ingrese un titulo");
-        } else if(items== ""){
-            alert("De haber por lo menos un item en la lista");
-        }else{
-            createList(title,items);
-        }
+            }
+                titleCard.value = "";
+    eventD.value = "";
+            break;
+        default:
+            let items = [];
+            let count = 0;
+            let date = "list"
+        
+            for (let itemL = 0; itemL < listItems.length; itemL++) {
+                let i = listItems[count].value;
+                if (i != "") {
+                items.push(i);
+                }
+                count++;
+            }
+        
+            if (title == "") {
+                alert("Ingrese un titulo");
+            } else if (items == "") {
+                alert("De haber por lo menos un item en la lista");
+            } else {
+                createCard(title,items,date);
+            }
+        
+            for (var i = 0; i < listItems.length; i++) {
+                listItems[i].value = "";
+            }
     }
-    message.style.display="none";
 });
 
-/* CREAR TARJETAS */
+
+
+//*CREAR TARJETAS *//
 
 function createCard(title,desc,date){
     const t = title;
@@ -381,21 +578,28 @@ function createCard(title,desc,date){
     cardO.appendChild(btnI);
     cardDel.appendChild(btnD);
 
-    card.appendChild(cardD)
+    card.appendChild(cardD);
+
     
     if(date == "list"){
         const cardI = document.createElement("section");
+        const cardL = document.createElement("ul");
         cardI.setAttribute("class","cardItems");
+        cardL. setAttribute("class", "cardList");
 
         for(let itemL = 0; itemL < desc.length; itemL++){
             let item;
             item = document.createElement("li");
-            cardI.appendChild(item)
+            cardI.appendChild(cardL);
+
+            cardL.appendChild(item);
             item.innerHTML += desc[itemL];
         }
-        card.appendChild(cardI)
+        cardI.appendChild(cardL);
+        card.appendChild(cardI);
         card.setAttribute("class","list");
         card.classList.add("card");
+        card.classList.add("card","cardShow");
     }
     else if (date == ""){
         const p = document.createElement("p");
@@ -404,79 +608,76 @@ function createCard(title,desc,date){
         card.appendChild(cardD);
     }
     else if (date != "list"){
+
+        let dateValid = date.split("");
+        let day = Number(dateValid[8] + dateValid[9]);
+        let month = Number(dateValid[5] + dateValid[6]);
+
+        dateValid= [day +"/"+ month];
+
+        const cardDate = document.createElement("section");
+        const dat = document.createElement("h1");
+
+        dat.textContent=dateValid;
+        cardDate.appendChild(dat);
+
         const p = document.createElement("p");
         p.textContent=d;
         cardD.appendChild(p);
         card.appendChild(cardD);
 
-        card.appendChild(date);
+        card.appendChild(cardDate);
         card.setAttribute("class","event");
-        card.classList.add("card");
+        card.classList.add("card","cardShow");
+        
     }
-    
     
     card.appendChild(cardO);
     card.appendChild(cardDel);
 
-    cardSection.appendChild(card);
+    setTimeout(()=>{
+        cardSection.appendChild(card)
+        
+        const firstElement = cardSection.children[0];
+        cardSection.insertBefore(card, firstElement);
+            
+        let tF = taskFilter.classList[1];
+        let eF = eventFilter.classList[1];
+        let lF = listFilter.classList[1];
+
+        const cardClass = card.classList[0];
+
+        switch(true) {
+            case ( tF === "active"):
+                var activeFilter = "task";
+
+                newCardWatcher(activeFilter,cardClass,card);
+                break;
+            case ( eF === "active"):
+                var activeFilter = "event";
+
+                newCardWatcher(activeFilter,cardClass,card);                  
+                break;
+            case ( lF === "active" && card.classList[0] !== "list"):
+                var activeFilter = "list";
+
+                newCardWatcher(activeFilter,cardClass,card);
+                break;
+            default:
+                hiddenMessage();
+                depureMessage();
+                card.classList.add("cardShow");
+        }
+
+    },1000)
     
-    let tF = taskFilter.classList[1];
-    let eF = eventFilter.classList[1];
-    let lF = listFilter.classList[1];
-
-    if(tF == "active" && card.classList[0] != "task"){
-        filterTask();
-    } else if (eF == "active" && card.classList[0] != "event"){
-        filterEvent();
-    } else if (lF == "active" && card.classList[0] != "list"){
-        filterList();
-    }
-
     titleCard.value = "";
-    taskInfo.value = "";
-}
-
-function createEvent(title,desc,date){
+    cardInfo.value = "";
     
-    const da = date;
-
-    let dateValid = da.split("");
-    let d = Number(dateValid[8] + dateValid[9]);
-    let m = Number(dateValid[5] + dateValid[6]);
-
-    dateValid= [d +"/"+ m];
-
-    const cardDate = document.createElement("section");
-    const dat = document.createElement("h1");
-
-    dat.textContent=dateValid;
-    cardDate.appendChild(dat);
-
-    createCard(title,desc,cardDate);
-
-    titleCard.value = "";
-    eventI.value = "";
-    eventD.value = "";
+    setInterval(depureShow, 1500);
 }
 
-function createList(title,itemS){
-    const i = itemS;
-    const cardI = document.createElement("section");
-    cardI.setAttribute("class","cardItems");
-
-    for(let itemL = 0; itemL < i.length; itemL++){
-        let item;
-        item = document.createElement("li");
-        cardI.appendChild(item)
-        item.innerHTML += i[itemL];
-    }
-
-    let items = cardI.innerText
-    let date = "list";
-    createCard(title, items, date);
-}
-
-/* BORRAR TARJETAS */
+//* BORRAR TARJETAS *//
 
 function cardDelete(e){
     let cardsElement = document.querySelectorAll(".card");
@@ -486,22 +687,101 @@ function cardDelete(e){
 
     ce = item.classList[0];
 
-    cardSection.removeChild(item);
-    cardWatcherDeleter(ce,cardsElement);
-}
+    let cont = e.target.parentElement;
+    cont.classList.add("deleted")
 
-/* CONTADOR DE TARJETAS */ 
+    let bConteiner = e.target.parentElement;
+    let button = e.target;
+    let card = e.target.parentElement.parentElement;
 
-const message = document.getElementById("message")
+    bConteiner.classList.add("deleted");
+    button.classList.add("deleted");
+    card.classList.add("deleted");
 
-function cardWatcher(i){
-    if(i == 0){
-        message.style.display="block";
-    } else{
-        message.style.display="none";
+    function del(){
+        cardSection.removeChild(item);  
+        cardWatcherDeleter(ce,cardsElement);
     }
 
-    console.log(i)
+    setTimeout(del,2000);
+}
+
+//* CONTADORES DE TARJETAS *//
+
+const message = document.getElementById("message");
+
+function showMessage(){
+    message.classList.add("showMessage");
+    setTimeout(()=>{
+        message.classList.replace("hiddenMessage","message");
+    },900)
+}
+
+function hiddenMessage(){
+        message.classList.add("messageHidden");
+        setTimeout(()=>{
+            message.classList.replace("message","hiddenMessage");
+        },900)  
+}
+
+function depureMessage(){
+    if(message.classList.contains("showMessage")){
+        message.classList.remove("showMessage");
+    } else if(message.classList.contains("messageHidden")){
+        message.classList.remove("messageHidden");
+    }
+}
+
+function cardWatcher(i,c){
+    switch(c){
+        case "task":
+            if(i==0 && message.classList=="hiddenMessage"){
+                showMessage();
+                depureMessage();
+            } else if (i!=0 && message.classList == "message"){
+                hiddenMessage();
+                depureMessage();
+            }
+            break;
+        case "event":
+            if(i==0 && message.classList=="hiddenMessage"){
+                showMessage();
+                depureMessage();
+            } else if (i!=0 && message.classList == "message"){
+                hiddenMessage();
+                depureMessage();
+            }
+            break;
+        case "list":
+            if(i==0 && message.classList=="hiddenMessage"){
+                showMessage();
+                depureMessage();
+            } else if (i!=0 && message.classList == "message"){
+                hiddenMessage();
+                depureMessage();
+            }
+            break;
+        default:
+            if(i==0 && message.classList=="hiddenMessage"){
+                showMessage();
+                depureMessage();
+            } else if (i!=0 && message.classList == "message"){
+                hiddenMessage();
+                depureMessage();
+            }
+            break;
+    }
+}
+
+function newCardWatcher(f,c,cl){
+    if(f == c && message.classList=="message"){
+        hiddenMessage();
+        depureMessage();
+        
+        cl.classList.add("cardShow");
+    } else{
+        cl.classList.add("cardFilted");
+    }
 }
 
 function cardWatcherDeleter(ce,cardsElement){
@@ -509,31 +789,43 @@ function cardWatcherDeleter(ce,cardsElement){
     let c = cardsElement;
     c = c.length;
 
-    c -= 1
+    c -= 1;
 
-    let cardsTask = document.querySelectorAll(".task");
-    let cardsEvent = document.querySelectorAll(".event");
-    let cardsList = document.querySelectorAll(".list");
+    let cardsTask = document.querySelectorAll(".task").length;
+    let cardsEvent = document.querySelectorAll(".event").length;
+    let cardsList = document.querySelectorAll(".list").length;
 
     let tF = taskFilter.classList[1];
     let eF = eventFilter.classList[1];
     let lF = listFilter.classList[1];
+    let aF = allFilter.classList[1];
 
-    if (c == 0){
-        message.style.display = "block";
-    } else if (t == "task" && tF == "active"){
-
-        if (cardsTask.length == 0)
-        message.style.display = "block";
-    } else if (t == "event" && eF == "active"){
-
-        if (cardsEvent.length == 0){
-            message.style.display = "block";
+    if(aF== "active"){
+        if(c==0){
+            showMessage();
+            depureMessage();
         }
-    } else if (t == "list" && lF == "active"){
-
-        if (cardsList.length == 0){
-            message.style.display = "block";
+    }
+    else{
+        switch (t) {
+            case "task":
+                if(tF == "active" && cardsTask == 0){
+                    showMessage();
+                    depureMessage();
+                }
+                break;
+            case "event":
+                if(eF=="active" && cardsEvent == 0){
+                    showMessage();
+                    depureMessage();
+                }
+                break;
+            case "list":
+                if(lF == "active" && cardsList == 0){
+                    showMessage();
+                    depureMessage();
+                }
+                break;
         }
     }
 }

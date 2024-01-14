@@ -3,16 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Notas</title>
     <link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
     <nav>
-        <button class="navButton active" id="all">Todo</button>
-        <button class="navButton" id="tasks">Tareas</button>
-        <button class="navButton" id="events">Eventos</button>
-        <button class="navButton" id="lists">Listas</button>
+        <button class="navButton active" id="all">
+            <span></span>
+            <span></span>
+            Todo
+        </button>
+        <button class="navButton" id="tasks">
+            <span></span>
+            <span></span>
+            Tareas
+        </button>
+        <button class="navButton" id="events">
+            <span></span>
+            <span></span>
+            Eventos
+        </button>
+        <button class="navButton" id="lists">
+            <span></span>
+            <span></span>
+            Listas
+        </button>
     </nav>
 
     <!-- Modals -->
@@ -26,15 +42,15 @@
                 </section>
                 
                 <section class="descrip" id="descrip">
-                    <h3 id="descripcionModal"><h3>
+                    <p id="descripcionModal">
+                        
+                    </p>
                 </section>
 
                 <section class="descrip descripList" id="descripList">
-                    <li id="listItem"></li>
-                    <li id="listItem"></li>
-                    <li id="listItem"></li>
-                    <li id="listItem"></li>
-                    <li id="listItem"></li>
+                    <ul id="itemsModal">
+
+                    </ul>
                 </section>
             </section>
             
@@ -56,53 +72,45 @@
                 <!-- Selector de tipo de nota -->
 
                 <div class="checkContainer">
-                    <label for="typeEvent">Seleccione el tipo de evento:</label> <br>
                     Tarea <input type="radio" class="check" name="typeEvent" id="task" checked> 
                     Evento <input type="radio" class="check" name="typeEvent" id="event"> 
                     Lista <input type="radio" class="check" name="typeEvent" id="list">
                 </div>
 
-                <div class="inputContainer">                     
-                    <input class="titleInput" type="text" id="cardTitle" placeholder="Agregue un tiulo a la tarjeta">
-                </div>
+                <section class="inputContainer">
+                    <input class="titleInput" type="text" id="cardTitle"  placeholder="Agregue un tiulo a la tarjeta">
 
-                <!-- Nota de tipo Task -->
+                    <!-- Nota de tipo Task -->
+                    <section class="containerTask " id="containerTask">
+                        <textarea class="cardDescription" type="text" id="cardDescription" placeholder="Descripcion de tarjeta" cols="30" rows="10"></textarea>
+                    </section>
 
-                <div class="inputContainer" id="containerTask">
-                    <textarea class="descriptionTask" type="text" id="cardDescription" placeholder="Descripcion de tarjeta" cols="30" rows="10"></textarea>
-                </div>
+                    <!-- Nota de tipo Event -->
+                    <section class="containerEvent hidden " id="containerEvent">
+                        <div>
+                            <input type="date" id="dateEvent" class="dateEvent edHidden">
+                        </div>
+                    </section>
 
-                <!-- Nota de tipo Event-->
+                    <!-- Nota de tipo List -->
+                    <section class="containerList hidden" id="containerList">
+                        <input type="text" id="item-1" class="itemList liHidden" placeholder="Ingrese un item a la lista">
+                        <input type="text" id="item-2" class="itemList liHidden" placeholder="Ingrese un item a la lista">
+                        <input type="text" id="item-3" class="itemList liHidden" placeholder="Ingrese un item a la lista">
+                        <input type="text" id="item-4" class="itemList liHidden" placeholder="Ingrese un item a la lista">
+                        <input type="text" id="item-5" class="itemList liHidden" placeholder="Ingrese un item a la lista">
+                    </section>
+                </section>
                 
-                <div class="inputContainer" id="containerEvent">
-                    <div class="inputContainer">
-                        <textarea class="eventDesc" type="text" id="eventDescription" placeholder="Descripcion de tarjeta" cols="30" rows="10"></textarea>
-                    </div>
-                    <div class="inputContainer">
-                        <input type="date" id="dateEvent" class="dateEvent">
-                    </div>
-                </div>
-                
-                
-                <!-- Nota de tipo List -->
-
-                <div class="inputContainer" id="containerList">
-                    <input type="text" id="item1" class="itemList" placeholder="Ingrese un item a la lista">
-                    <input type="text" id="item2" class="itemList" placeholder="Ingrese un item a la lista">
-                    <input type="text" id="item3" class="itemList" placeholder="Ingrese un item a la lista">
-                    <input type="text" id="item4" class="itemList" placeholder="Ingrese un item a la lista">
-                    <input type="text" id="item5" class="itemList" placeholder="Ingrese un item a la lista">
-                </div>
-
                 <button  class="formButton" id="saveCard">Guardar</button>
             </form>
         </section>
-        
+
         <!-- Bandeja de notas -->
         <section class="cardTable" id="cardTable">
 
-            <section id="message">
-                <h1>Aun no tiene ningun recordatorio.</h1>
+            <section class="hiddenMessage" id="message">
+                <h1>No tiene ningun recordatorio.</h1>
             </section>
 
             <section id="cardSection">
@@ -146,11 +154,13 @@
                     </section>
     
                     <section class="cardItems">
-                        <li>12 huevo</li>
-                        <li>1 leche</li>
-                        <li>3 manzanas</li>
-                        <li>alimento Laica</li>
-                        <li>pasta dental</li>
+                        <ul class="cardList">
+                            <li>12 huevos</li>
+                            <li>1 leche</li>
+                            <li>3 manzanas</li>
+                            <li>Alimento Laica</li>
+                            <li>Pasta dental</li>
+                        </ul>
                     </section>
     
                     <section class="cardVew">

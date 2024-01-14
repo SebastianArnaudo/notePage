@@ -36,30 +36,63 @@ nav{
     
 
     .navButton, .active{
+        position: relative;
         font-size: 25px;
+        padding: 0 2%;
         margin: 0 2%;
         min-height: 100%;
         background: none;
         border: none;
-        border-color: none;
         cursor: pointer;
         color: rgb(238, 231, 231);
-        transition: color, border-top, border-bottom, border-color, 1s;
+        transition:color, 1s;
+        overflow: hidden;
     }
+
+    .navButton span{
+        position: absolute;
+        background: rgb(255, 196, 0);
+    }
+
+    .navButton span:nth-child(1){
+        width: 100%;
+        height: 4px;
+        top: 0;
+        left:  -100%;
+        transition: left, right, 1s;
+    }
+
+    .navButton span:nth-child(2){
+        width: 100%;
+        height: 4px;
+        bottom: 0;
+        right:  -100%;
+        transition: left, right, 1s;
+    }
+    
     .navButton:hover{
-        color: rgba(255, 145, 0, 0.932);
-        border-top:4px solid;
-        border-bottom: 4px solid;
-        border-color:rgb(230, 130, 0);
-        transition: color, border-top, border-bottom, border-color, 1s;
+        color: rgb(255, 196, 0);
+        transition:left, right,color, 1s;
+    }
+
+    .navButton:hover span:nth-child(1){
+        left: 0;
+        transition: left, right, 1s;
+    }
+    .navButton:hover span:nth-child(2){
+        right: 0;
+        transition: left, right, 1s;
     }
 
     .active{
-        color: rgba(255, 145, 0, 0.932);
-        border-top:4px solid;
-        border-bottom: 4px solid;
-        border-color:rgb(230, 130, 0);
+        color: rgb(255, 196, 0);
+    }
 
+    .active span:nth-child(1){
+        left:0;
+    }
+    .active span:nth-child(2){
+        right:0;
     }
 }
 
@@ -82,7 +115,7 @@ nav{
         border-radius: .5rem;
         pointer-events: all;
         margin: auto;
-        background: linear-gradient(to left top, rgb(247, 1, 1) 20%, rgb(255, 85, 0) 70%);
+        background: linear-gradient(to left top, rgb(247, 1, 1) 20%, rgb(236, 79, 0) 70%);
         padding: 10px;
         text-align: center;
         height: auto;
@@ -118,22 +151,65 @@ nav{
         box-shadow: 5px 3px 5px rgb(99, 33, 2);
     }
 
-    .descrip,.descripList{
+
+
+    .descrip {
         background: rgb(238, 231, 231);
         padding: 2%;
-        height: 100%;
-        width: 100%;
+        height: 150px;
+        width: 100%; 
         box-shadow: 5px 3px 5px rgb(99, 33, 2);
+        overflow: hidden; 
+    }
+    
+    .descrip > p {
+        white-space: pre-wrap; 
+        word-wrap: break-word; 
+        overflow-y: auto;
+        max-height: 100%;
     }
 
     .descrip{
         display: none;
     }
+    
+    .descrip ::-webkit-scrollbar{
+        width: 7px;
+    }
+    
+    .descrip ::-webkit-scrollbar-thumb{
+        background-color: rgb(255, 115, 0);
+        border-radius: 5px;
+    }
+
+    .descripList{
+        background: rgb(238, 231, 231);
+        padding: 2%;
+        height: 150px;
+        width: 100%;
+        overflow-x: hidden;
+        white-space: wrap;
+        overflow-y: auto;
+        box-shadow: 5px 3px 5px rgb(99, 33, 2);
+    }
+
     .descripList{
         display: block;
     }
 
-    .confirmDelete, .cancelDelete, .closeButton{
+    .descripList::-webkit-scrollbar{
+        width: 7px;
+    }
+    
+    .descripList::-webkit-scrollbar-thumb{
+        background-color: rgb(255, 115, 0);
+        border-radius: 5px;
+    }
+
+
+    
+    
+    .closeButton{
         font-size: 20px;
         color:black;
         height: 10%;
@@ -141,34 +217,22 @@ nav{
         margin: 2%;
         cursor: pointer;
         border:2px solid;
-        transition: color, border, border-color, background 1s;
+        border-radius: .5rem;
+        background: rgb(255, 196, 0);
+        border-color: rgb(255, 196, 0);
+        box-shadow: 2px 3px 2px rgb(112, 86, 1);
+        transition: border, border-color, background, box-shadow, 1s;
     }
-    .confirmDelete:hover, .cancelDelete:hover, .closeButton:hover{
+    .closeButton:hover{
         color: white;
         border:2px solid;
-        transition: color, border, border-color, background 1s;
-    }
-
-    .confirmDelete{
-        background-color: rgba(228, 15, 15, 0.932);
-        border-color:rgba(228, 15, 15, 0.932);
-        box-shadow: 5px 3px 5px rgb(131, 2, 2)
-    }
-    .confirmDelete:hover{
-        background-color: rgba(167, 5, 5, 0.932);        
-        border-color:rgba(167, 5, 5, 0.932);
-    }
-
-    .cancelDelete, .closeButton{
-        background-color: rgb(248, 149, 0);
-        border-color:rgb(248, 149, 0);
-        box-shadow: 5px 3px 5px rgb(185, 111, 0);
-    }
-
-    .cancelDelete:hover, .closeButton:hover{
         background-color: white;
-        color:rgb(248, 149, 0);
+        box-shadow: inset 5px 3px 5px rgb(221, 169, 0);
+        color:rgb(255, 196, 0);
+        transition: border, border-color, background, box-shadow, 1s;
     }
+
+    
 }
 
 
@@ -191,13 +255,12 @@ nav{
     align-items: left;
     justify-content: center;
     text-align: center;
-    background: linear-gradient(to left top, rgb(247, 1, 1) 20%, rgb(255, 85, 0) 70%);
+    background: linear-gradient(to left top, rgb(247, 1, 1) 20%, rgb(236, 79, 0) 70%);
     box-shadow: 5px 5px 5px rgb(65, 20, 1);
 }
 
 form{
-
-    
+    position: relative;
     display: block;
     margin: 5%;
     width: 90%;
@@ -207,13 +270,11 @@ form{
     
     /* Selector de tipo de notas */
     .checkContainer{
-        margin: 2%;
-        display: block;
+        display: inline-block;
         align-items: center;
-        text-align: center;
-    
-        
-    
+        justify-content: center;
+        text-align: right;
+
         .check{
             cursor: pointer;
             background: rgb(238, 231, 231);
@@ -222,25 +283,30 @@ form{
             width: 15px;
             height: 15px;
             appearance: none;
+            transition: background-color, 1s;
+        }
+        .check:hover{
+            background-color: #7842f5ee;
         }
     
         .check:checked{
-            background-color: rgb(199, 64, 2);
+            background-color: #4c00ffee;
         }
     }
 
     /* Contenedores de tipo de notas */
-    #containerTask{
+
+    .containerList{
         display: block;
     }
-    #containerEvent{
-        display: none;
-    }
 
-    #containerList{
-        display: none;
+    .hidden{
+        width: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
     }
-
+    
     /* Inputs formulario */
 
     .titleInput, input,textarea:focus{
@@ -269,8 +335,10 @@ form{
         text-align: center;
     }
     
-    /* estilos compartidos, salvo el tamaño */
-    .descriptionTask, .eventDesc{
+    .cardDescription{
+        margin: 2%;
+        height: 10%;
+        min-height: 30%;
         background: rgb(238, 231, 231);
         box-shadow: 5px 3px 5px rgb(99, 33, 2);
         border: 0;
@@ -281,50 +349,49 @@ form{
         align-items: center;
         justify-content: center;
     }
-    .descriptionTask{
-        margin: 5%;
-        height: 10%;
-        min-height: 30%;
-    }
-    .eventDesc{
-        height: 50%;
-        min-height: 20%;
-        margin: 5%;
-        padding: 0;
-    }
-
+    
     /* fecha de event */
     .dateEvent{
         text-align: center;
         font-family: roboto;
         background: rgb(238, 231, 231);
         padding: 2%;
+        margin: 2%;
         width: 50%;
         border: 0;
         box-shadow: 5px 3px 5px rgb(99, 33, 2);
         outline: none;
     }
 
+    .edHidden, .liHidden{
+        width: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
+        opacity: 0;
+    }
+
     /* Botones */
     .formButton{
+        font-size: 14px;
         border-radius: .5rem;
-        color: rgb(255, 255, 255);
+        color: rgb(238, 231, 231);
         margin: 2%;
         height: 10%;
         width: 30%;
         cursor: pointer;
         border:2px solid;
-        border-color: rgba(255, 145, 0, 0.932);
-        background-color: rgba(255, 60, 0, 0.932);        
-        box-shadow: 5px 3px 5px rgb(148, 48, 2);
+        border-color: #4c00ffee;
+        background-color: #4c00ffee;        
+        box-shadow: 5px 3px 5px #290188ee;
         transition: border, border-color, background, box-shadow, 1s;
     }
     .formButton:hover{
         border:2px solid;
-        border-color: rgba(219, 125, 2, 0.932);
-        color: rgba(255, 60, 0, 0.932);
+        border-color: #4c00ffee;
+        color: #4c00ffee;
         background-color: white;
-        box-shadow: inset 5px 3px 5px  rgba(255, 60, 0, 0.932);
+        box-shadow: inset 5px 3px 5px  #3b00c4ee;
         transition: border, border-color, background, box-shadow, 1s;
     }
 }
@@ -343,10 +410,13 @@ form{
     align-items: right;
     justify-content: center;
     text-align: center;
-    background: linear-gradient(to left top, rgb(247, 1, 1) 20%, rgb(255, 85, 0) 70%);
-    box-shadow: 5px 5px 5px rgb(65, 20, 1);
+    background: linear-gradient(to left top, rgb(247, 1, 1) 20%, rgb(236, 79, 0) 70%);
+    box-shadow:  5px 5px 5px rgb(65, 20, 1);
 
-    #message{
+    .message{
+        display: block;
+    }
+    .hiddenMessage{
         display: none;
     }
 }
@@ -362,22 +432,36 @@ form{
 
 /* tipos de tarjeta */
 .task, .event, .list{
+    display: grid;
+    position: relative;
     overflow: hidden;
     border-radius: .5rem;
     margin: 2% 1.5% 2% 1.5%;
     align-items: center;
     justify-content: center;
     text-align: left;
-    display: grid;
     grid-template-columns:repeat(3,1fr);
+    grid-template-rows:auto;
     background: rgb(238, 231, 231);
     pointer-events: none;
-    box-shadow: 5px 3px 5px;
+    box-shadow: 5px 3px 5px;        
 
-    .cardData, .cardDate, .cardItems, .cardVew{
+    .cardData, .cardDate, .cardItems, .cardVew{        
         padding: 5%;
     }
 
+    .cardItems{
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+    .cardData > p{
+        overflow: hidden;
+        max-height:30px;
+        max-width: 100px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 
     .cardVew{
         align-items: center;
@@ -399,14 +483,14 @@ form{
         margin: 2%;
         cursor: pointer;
         border:2px solid;
-        transition: color, border, border-color, box-shadow, background 1s;
         pointer-events: all;
+        transition: border, border-color, background, box-shadow, 1s;
     }
 
     .info:hover, .delete:hover{
         color: white;
         border:2px solid;
-        transition: color, border, border-color, box-shadow, background 1s;
+        transition: border, border-color, background, box-shadow, 1s;
     }
 
     .delete{
@@ -415,27 +499,48 @@ form{
         margin: 0%;
         background-color: rgba(228, 15, 15, 0.932);
         border-color:rgba(228, 15, 15, 0.932);
+        transition: border, border-color, background, box-shadow, 1s;
     }
+
+    .delete.deleted{
+        animation: delete_button 3s;
+    }
+    .deleterCard.deleted{
+        animation: delete_buttonContainer 3s;
+    }
+
     .delete:hover{
         color: rgba(167, 5, 5, 0.932);
         background-color: white;
         border-color:rgba(167, 5, 5, 0.932);
-        box-shadow: inset 3px 5px 5px rgb(131, 2, 2)
+        box-shadow: inset 3px 5px 5px rgb(131, 2, 2);
+        transition: border, border-color, background, box-shadow, 1s;
+    }
+
+    .delete:focus{
+        cursor: auto;
+        background-color: rgba(228, 15, 15, 0.932);
+        border-color:rgba(228, 15, 15, 0.932);
+        color:rgba(228, 15, 15, 0.932);
+        box-shadow: none;
+        transition: border, border-color, background, box-shadow, 1s;
     }
 
     .info{
         border-radius: .5rem;
         height: 100%;
         width: 50%;
-        background-color: rgb(199, 2, 117);
-        border-color:rgb(199, 2, 117);
-        box-shadow: 5px 3px 5px rgb(131, 2, 77)
+        border-color: #4c00ffee;
+        background-color: #4c00ffee;
+        box-shadow: 5px 3px 5px #290188ee;
+        transition: border, border-color, background, box-shadow, 1s;
     }
     .info:hover{
-        color: rgba(81, 7, 124, 0.932);
+        color: #3c05bdee;
         background-color: white;
-        box-shadow: inset 5px 3px 5px rgb(131, 2, 77);
-        border-color:rgba(81, 7, 124, 0.932);
+        box-shadow: inset 5px 3px 5px #3801b9ee;
+        border-color:#3c05bdee;
+        transition: border, border-color, background, box-shadow, 1s;
     }
 }
 
@@ -444,9 +549,236 @@ form{
 
     .info, .delete{
         font-size: 15px;
+        text-overflow: clip;
+    }
+
+    .cardList{
+        overflow: hidden;
+        max-height:50px;
+        max-width: 100px;
+        list-style: none; 
+    }
+    .cardList > li{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 
-.cardHidden{
+.cardFilted{
     display: none;
 }
+
+
+/* *ANIMACIONES */
+
+/* Formulario */
+.hiddenDate{
+    animation: hidden_Date 1s;
+}
+
+.showDate{
+    animation: show_Date 1s;
+}
+
+.showInput{
+    animation: show_Input 1s;
+}
+
+.hiddenInput{
+    animation: hidden_input 1s;
+}
+
+.hiddenInputsList{
+    animation: hidden_Input_List 1s;
+}
+.showInputsList{
+    animation: show_Input_List 1s;
+}
+
+@keyframes show_Input_List{
+    0%, 55%{
+        margin: 0%;
+        width: 0%;
+        min-width: 0%;
+        padding: 0%;
+        opacity: 0%;
+    }
+    55%,95%{
+        margin: 2%;
+        width: 70%;
+        min-width: 20%;
+        padding: 1%;
+        opacity: 100%;
+    }
+}
+
+@keyframes hidden_Input_List{
+    0%, 55%{
+        margin: 2%;
+        width: 70%;
+        min-width: 20%;
+        padding: 1%;
+        opacity: 100%;
+    }
+    55%,95%{
+        margin: 0%;
+        width: 0%;
+        min-width: 0%;
+        padding: 0%;
+        opacity: 0%;
+    }
+}
+
+@keyframes hidden_Date{
+    0%, 55%{
+        width: 50%;
+        padding: 2%;
+        opacity: 100%;
+    }
+    55%,95%{
+        width: 0%;
+        padding:0%;
+        opacity: 0%;
+    }
+}
+
+@keyframes show_Date{
+    0%, 55%{
+        width: 0;
+        padding:0%;
+        opacity: 0%;
+    }
+    55%,95%{
+        width: 50%;
+        padding: 2%;
+        opacity: 100%;
+    }
+}
+
+@keyframes show_Input{
+    0%,55%{
+        padding: 0%;
+        height: 0%;
+        margin: 0%;
+        opacity: 0%;
+    }
+    55%, 95%{
+        height: 10%;
+        padding: 2%;        
+        margin: 2%;
+        opacity: 100%;
+    }
+}
+
+@keyframes hidden_input{
+    0%, 55%{
+        padding: 2%;
+        margin: 2%;
+        height: 10%;
+        opacity: 100%;
+    }
+
+    55%, 95%{        
+        padding: 0%;
+        margin: 0%;
+        height: 0%;
+        opacity: 0%;
+    }
+}
+
+/* card-table */
+.card.deleted{        
+    animation: delete_card 3s;
+}
+
+.cardHidden{
+    animation: hidden_card 1s;
+}
+
+.cardShow{
+    animation:show_card 1s;
+}
+
+.messageShow{
+    animation: show_Message 1s;
+}
+
+.messageHidden{
+    animation: hidden_Message 1s;
+}
+
+@keyframes hidden_Message{
+    0%,55%{
+        opacity: 100%;
+    }
+
+    55%, 100%{
+        opacity:0%;
+    }
+}
+
+@keyframes show_Message{
+    0%,55%{
+        opacity: 0%;
+    }
+
+    55%, 100%{
+        opacity:100%;
+    }
+}
+
+@keyframes hidden_card {
+
+    
+    0%,55%{
+        width: 95%;
+    }
+
+    55%, 100%{
+        width:0%;
+    }
+
+}
+
+@keyframes show_card {
+    
+    0%,55%{
+        width: 0%;
+    }
+    55%,100%{
+        width: 95%;
+    }
+}
+
+@keyframes delete_buttonContainer{
+    15%,90%{
+        z-index: 1;
+        position: absolute;
+        width: 100%;
+    }
+}
+
+@keyframes delete_button{
+    0%,10%{
+        color:rgba(228, 15, 15, 0.932);
+        background-color: rgba(228, 15, 15, 0.932);
+        border-color:rgba(228, 15, 15, 0.932);
+        box-shadow:none;
+    }
+    40%,100%{
+        width: 100%;
+        color:rgba(228, 15, 15, 0.932);
+    }
+
+}
+
+@keyframes delete_card {
+    0%,55%{
+        width: 100%;
+    }
+    60%,100%{
+        width: 0%;
+    }
+}
+
