@@ -12,16 +12,16 @@ body{
     text-align: center;
     width: 100%;
     min-height: 100vh;
-    background: linear-gradient(to right bottom, rgb(187, 60, 2) 20%,rgb(156, 43, 43) 70%);
+    background: linear-gradient(to right bottom, #bb3c02 20%,#9c2b2b 70%);
 }
 
 body::-webkit-scrollbar{
     width: 7px;
-    background:rgb(156, 43, 43) ;
+    background:#9c2b2b ;
 }
 
 body::-webkit-scrollbar-thumb{
-    background-color: rgb(255, 115, 0);
+    background-color: #ff7300;
     border-radius: 5px;
 }
 
@@ -44,14 +44,14 @@ nav{
         background: none;
         border: none;
         cursor: pointer;
-        color: rgb(238, 231, 231);
+        color: #eee7e7;
         transition:color, 1s;
         overflow: hidden;
     }
 
     .navButton span{
         position: absolute;
-        background: rgb(255, 196, 0);
+        background: #FAC800;
     }
 
     .navButton span:nth-child(1){
@@ -71,7 +71,7 @@ nav{
     }
     
     .navButton:hover{
-        color: rgb(255, 196, 0);
+        color: #FAC800;
         transition:left, right,color, 1s;
     }
 
@@ -85,7 +85,7 @@ nav{
     }
 
     .active{
-        color: rgb(255, 196, 0);
+        color: #FAC800;
     }
 
     .active span:nth-child(1){
@@ -96,42 +96,104 @@ nav{
     }
 }
 
-.modalContainer{
-    
-    position: fixed;
+
+/* POP UPs */
+
+.alertConteiner{
+    justify-content: center;
     display: none;
+    position: fixed;
+    z-index: 3;
+    width: 100%;
+    height: 100vh;
+
+    .alert{
+        padding: 10px;
+        box-sizing: border-box;
+        pointer-events: all;
+        border-radius: .5rem;
+        background: linear-gradient(to left top, #f70101 20%, #ec4f00 70%);
+        padding: 10px;
+        text-align: left;
+        height: min-content;
+        min-height: 150px;
+        width: 20%;
+        box-shadow: 5px 3px 15px #632102,-5px -3px 15px #632102;
+        
+        .alertTitle{
+            width: min-content;
+            background: #eee7e7; 
+            box-shadow: 5px 3px 5px #632102;
+            padding: 2%;
+        }
+
+        .alertContent{
+            margin:2% auto;
+            padding: 2%;
+            width: 100%;
+            min-width: min-content;
+            background: #eee7e7; 
+            box-shadow: 5px 3px 5px #632102;
+        }
+
+        .buttonAlertContent{
+            margin: 0;
+            text-align: end;
+            min-width: min-content;
+        }
+
+        .closeAlert{
+            margin: 20px auto 0;
+            padding: 2% 2%;
+            font-size: 16px;
+            color:#000000;
+            height: min-content;
+            min-width: min-content;
+            cursor: pointer;
+            border:2px solid;
+            border-radius: .5rem;
+            background: #ffc400;
+            border-color: #ffc400;
+            box-shadow: 2px 3px 2px #705601;
+            transition: border, border-color, background, box-shadow, 1s;
+        }
+    
+        .closeAlert:hover{
+            border:2px solid;
+            background-color: #ffffff;
+            box-shadow: inset 5px 3px 5px #dda900;
+            color:#ffc400;
+            transition: border, border-color, background, box-shadow, 1s;
+        }
+    }
+}
+
+.modal{
+    display: block;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
     box-sizing: border-box;
     z-index: 2;
-    top:0;
     right: 0;
     bottom: 0;
-    left: 0;
-    align-items: center;
-    justify-content: center;
-    background:rgba(223, 184, 158, 0.418);
+    margin: 2vh;
     pointer-events: all;
-    
-    .modal{
-        border-radius: .5rem;
-        pointer-events: all;
-        margin: auto;
-        background: linear-gradient(to left top, rgb(247, 1, 1) 20%, rgb(236, 79, 0) 70%);
-        padding: 10px;
-        text-align: center;
-        height: auto;
-        width: 40%;
-    }
+    border-radius: .5rem;
+    background: linear-gradient(to left top, #f70101 20%, #ec4f00 70%);
+    padding: 10px;
+    text-align: center;
+    min-height: 200px;
+    width: 30%;
+    min-width: min-content;
+    box-shadow: 5px 3px 15px #632102,-5px -3px 15px #632102;
+
 
     .modalContent{
-        background: rgb(238, 231, 231);
         padding: 2%;
-        margin: 5%;
+        margin: 2% 5% 2% 5%;
     }
-
-    .cardContent{
-        background: none;
-    }
-
+    
     .title,.titleGrid{
         text-align: center;
         align-items: center;
@@ -139,9 +201,9 @@ nav{
         padding: 2%;
         height: 100%;
         width: 100%;
-        background: rgb(238, 231, 231);
+        background: #eee7e7;
         margin :0 0 2% 0;
-        box-shadow: 5px 3px 5px rgb(99, 33, 2);
+        box-shadow: 5px 3px 5px #632102;
     }
 
     .titleGrid{
@@ -151,34 +213,28 @@ nav{
         box-shadow: 5px 3px 5px rgb(99, 33, 2);
     }
 
-
-
     .descrip {
         background: rgb(238, 231, 231);
         padding: 2%;
         height: 150px;
         width: 100%; 
         box-shadow: 5px 3px 5px rgb(99, 33, 2);
-        overflow: hidden; 
+        overflow-y: scroll; 
     }
-    
+
     .descrip > p {
         white-space: pre-wrap; 
         word-wrap: break-word; 
         overflow-y: auto;
         max-height: 100%;
     }
-
-    .descrip{
-        display: none;
-    }
     
-    .descrip ::-webkit-scrollbar{
+    .descrip::-webkit-scrollbar{
         width: 7px;
     }
     
-    .descrip ::-webkit-scrollbar-thumb{
-        background-color: rgb(255, 115, 0);
+    .descrip::-webkit-scrollbar-thumb{
+        background-color: #ff7300;
         border-radius: 5px;
     }
 
@@ -194,49 +250,44 @@ nav{
     }
 
     .descripList{
-        display: block;
-    }
-
-    .descripList::-webkit-scrollbar{
-        width: 7px;
+        display: none;
     }
     
-    .descripList::-webkit-scrollbar-thumb{
-        background-color: rgb(255, 115, 0);
-        border-radius: 5px;
+    .closeButtonContent{
+        display: flex;
+        margin-right: 5%;
+        justify-content: right;
     }
 
-
-    
-    
     .closeButton{
         font-size: 20px;
-        color:black;
+        color:#000000;
         height: 10%;
-        width: 30%;
-        margin: 2%;
+        width: 10%;
+        min-width: min-content;
         cursor: pointer;
         border:2px solid;
         border-radius: .5rem;
-        background: rgb(255, 196, 0);
-        border-color: rgb(255, 196, 0);
-        box-shadow: 2px 3px 2px rgb(112, 86, 1);
-        transition: border, border-color, background, box-shadow, 1s;
-    }
-    .closeButton:hover{
-        color: white;
-        border:2px solid;
-        background-color: white;
-        box-shadow: inset 5px 3px 5px rgb(221, 169, 0);
-        color:rgb(255, 196, 0);
+        background: #ffc400;
+        border-color: #ffc400;
+        box-shadow: 2px 3px 2px #705601;
         transition: border, border-color, background, box-shadow, 1s;
     }
 
-    
+    .closeButton:hover{
+        border:2px solid;
+        background-color: #ffffff;
+        box-shadow: inset 5px 3px 5px #dda900;
+        color:#ffc400;
+        transition: border, border-color, background, box-shadow, 1s;
+    }
 }
 
+.modalH{
+    display: none;
+}
 
-/* contenedor proncipal */
+/* CONTENEDOR PRINCIPAL */
 .maincontainer{
     height: 100vh;
     width: 100%;
@@ -244,8 +295,9 @@ nav{
     grid-template-columns:repeat(2,1fr);
 }
 
-/* bandeja de ingeso de tarjeta*/
+/* BANDEJA DE FORMULARIO */
 .insertCard{
+    overflow: hidden;
     border-radius: .5rem;
     display: flex;
     margin: 5% 20% 0 5%;
@@ -255,8 +307,8 @@ nav{
     align-items: left;
     justify-content: center;
     text-align: center;
-    background: linear-gradient(to left top, rgb(247, 1, 1) 20%, rgb(236, 79, 0) 70%);
-    box-shadow: 5px 5px 5px rgb(65, 20, 1);
+    background: linear-gradient(to left top, #f70101 20%, #ec4f00 70%);
+    box-shadow: 5px 5px 15px #632102,-5px -5px 15px #632102;
 }
 
 form{
@@ -266,6 +318,7 @@ form{
     width: 90%;
     height: 90%;
     min-width: 30%;
+    color: #e7e7e7;
     min-height: 40%;
     
     /* Selector de tipo de notas */
@@ -277,8 +330,8 @@ form{
 
         .check{
             cursor: pointer;
-            background: rgb(238, 231, 231);
-            border: 3px solid rgb(238, 231, 231);
+            background: #eee7e7;
+            border: 3px solid #ede8e8;
             border-radius: 50%;
             width: 15px;
             height: 15px;
@@ -297,6 +350,7 @@ form{
     /* Contenedores de tipo de notas */
 
     .containerList{
+        overflow: hidden;
         display: block;
     }
 
@@ -348,18 +402,30 @@ form{
         text-align: center;
         align-items: center;
         justify-content: center;
+    }    
+
+    .cardDescription::-webkit-scrollbar{
+        width: 7px;
+    }
+    
+    .cardDescription::-webkit-scrollbar-thumb{
+        background-color: #ff7300;
+        border-radius: 5px;
+    }
+    .containerTask{
+        overflow: hidden;
     }
     
     /* fecha de event */
     .dateEvent{
         text-align: center;
-        font-family: roboto;
-        background: rgb(238, 231, 231);
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+        background: #eee7e7;
         padding: 2%;
         margin: 2%;
         width: 50%;
         border: 0;
-        box-shadow: 5px 3px 5px rgb(99, 33, 2);
+        box-shadow: 5px 3px 5px #632102;
         outline: none;
     }
 
@@ -375,7 +441,7 @@ form{
     .formButton{
         font-size: 14px;
         border-radius: .5rem;
-        color: rgb(238, 231, 231);
+        color: #eee7e7;
         margin: 2%;
         height: 10%;
         width: 30%;
@@ -390,13 +456,13 @@ form{
         border:2px solid;
         border-color: #4c00ffee;
         color: #4c00ffee;
-        background-color: white;
+        background-color: #ffffff;
         box-shadow: inset 5px 3px 5px  #3b00c4ee;
         transition: border, border-color, background, box-shadow, 1s;
     }
 }
 
-/* bandeja de tarjeta */
+/* BANDEJA DE TARJETAS */
 .cardTable{
     border-radius: .5rem;
     margin: 15% 0 15% 0;
@@ -410,8 +476,8 @@ form{
     align-items: right;
     justify-content: center;
     text-align: center;
-    background: linear-gradient(to left top, rgb(247, 1, 1) 20%, rgb(236, 79, 0) 70%);
-    box-shadow:  5px 5px 5px rgb(65, 20, 1);
+    background: linear-gradient(to left top, #f70101 20%, #ec4f00 70%);
+    box-shadow: 5px 5px 15px #632102,-5px -5px 15px #632102;
 
     .message{
         display: block;
@@ -426,9 +492,10 @@ form{
 }
 
 .cardTable::-webkit-scrollbar-thumb{
-    background-color: rgb(255, 115, 0);
+    background-color: #ff7300;
     border-radius: 5px;
 }
+
 
 /* tipos de tarjeta */
 .task, .event, .list{
@@ -442,7 +509,7 @@ form{
     text-align: left;
     grid-template-columns:repeat(3,1fr);
     grid-template-rows:auto;
-    background: rgb(238, 231, 231);
+    background: #eee7e7;
     pointer-events: none;
     box-shadow: 5px 3px 5px;        
 
@@ -479,7 +546,7 @@ form{
 
     .info, .delete{
         font-size:15px;
-        color:white;
+        color:#ffffff;
         margin: 2%;
         cursor: pointer;
         border:2px solid;
@@ -488,7 +555,7 @@ form{
     }
 
     .info:hover, .delete:hover{
-        color: white;
+        color: #ffffff;
         border:2px solid;
         transition: border, border-color, background, box-shadow, 1s;
     }
@@ -497,8 +564,8 @@ form{
         height: 100%;
         width: 50%;
         margin: 0%;
-        background-color: rgba(228, 15, 15, 0.932);
-        border-color:rgba(228, 15, 15, 0.932);
+        background-color: #e40f0fee;
+        border-color:#e40f0fee;
         transition: border, border-color, background, box-shadow, 1s;
     }
 
@@ -510,18 +577,18 @@ form{
     }
 
     .delete:hover{
-        color: rgba(167, 5, 5, 0.932);
-        background-color: white;
-        border-color:rgba(167, 5, 5, 0.932);
-        box-shadow: inset 3px 5px 5px rgb(131, 2, 2);
+        color: #a70505ee;
+        background-color: #ffffff;
+        border-color:#a70505ee;
+        box-shadow: inset 3px 5px 5px #830202;
         transition: border, border-color, background, box-shadow, 1s;
     }
 
     .delete:focus{
         cursor: auto;
-        background-color: rgba(228, 15, 15, 0.932);
-        border-color:rgba(228, 15, 15, 0.932);
-        color:rgba(228, 15, 15, 0.932);
+        background-color: #e40f0fee;
+        border-color:#e40f0fee;
+        color:#e40f0fee;
         box-shadow: none;
         transition: border, border-color, background, box-shadow, 1s;
     }
@@ -537,7 +604,7 @@ form{
     }
     .info:hover{
         color: #3c05bdee;
-        background-color: white;
+        background-color: #ffffff;
         box-shadow: inset 5px 3px 5px #3801b9ee;
         border-color:#3c05bdee;
         transition: border, border-color, background, box-shadow, 1s;
@@ -570,7 +637,7 @@ form{
 }
 
 
-/* *ANIMACIONES */
+/* ANIMACIONES */
 
 /* Formulario */
 .hiddenDate{
@@ -597,36 +664,24 @@ form{
 }
 
 @keyframes show_Input_List{
-    0%, 55%{
-        margin: 0%;
-        width: 0%;
-        min-width: 0%;
-        padding: 0%;
-        opacity: 0%;
+    0%, 55% {
+        transform: translateX(-100%);
+        opacity: 0;
     }
-    55%,95%{
-        margin: 2%;
-        width: 70%;
-        min-width: 20%;
-        padding: 1%;
-        opacity: 100%;
+    55%, 100%{
+        transform: translateX(0%);
+        opacity: 1;
     }
 }
 
 @keyframes hidden_Input_List{
-    0%, 55%{
-        margin: 2%;
-        width: 70%;
-        min-width: 20%;
-        padding: 1%;
-        opacity: 100%;
+    0%, 55% {
+        transform: translateX(0%);
+        opacity: 1;
     }
-    55%,95%{
-        margin: 0%;
-        width: 0%;
-        min-width: 0%;
-        padding: 0%;
-        opacity: 0%;
+    55%, 100% {
+        transform: translateX(100%);
+        opacity: 0;
     }
 }
 
@@ -657,33 +712,24 @@ form{
 }
 
 @keyframes show_Input{
-    0%,55%{
-        padding: 0%;
-        height: 0%;
-        margin: 0%;
-        opacity: 0%;
+    0%, 55% {
+        transform: translateY(-100%);
+        opacity: 0;
     }
     55%, 95%{
-        height: 10%;
-        padding: 2%;        
-        margin: 2%;
-        opacity: 100%;
+        transform: translateY(0%);
+        opacity: 1;
     }
 }
 
 @keyframes hidden_input{
-    0%, 55%{
-        padding: 2%;
-        margin: 2%;
-        height: 10%;
-        opacity: 100%;
+    0%, 55% {
+        transform: translateY(0%);
+        opacity: 1;
     }
-
-    55%, 95%{        
-        padding: 0%;
-        margin: 0%;
-        height: 0%;
-        opacity: 0%;
+    55%, 95% {
+        transform: translateY(-100%);
+        opacity: 0;
     }
 }
 
@@ -729,25 +775,26 @@ form{
 }
 
 @keyframes hidden_card {
-
-    
-    0%,55%{
-        width: 95%;
+    0% {
+        transform: translateX(0%);
+        opacity: 1;
     }
-
-    55%, 100%{
-        width:0%;
+    100% {
+        transform: translateX(-100%);
+        opacity: 0;
+        width: 0;
     }
-
 }
 
 @keyframes show_card {
-    
-    0%,55%{
-        width: 0%;
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+        width: 0;
     }
-    55%,100%{
-        width: 95%;
+    100% {        
+        transform: translateX(0%);
+        opacity: 1;
     }
 }
 
@@ -761,14 +808,14 @@ form{
 
 @keyframes delete_button{
     0%,10%{
-        color:rgba(228, 15, 15, 0.932);
-        background-color: rgba(228, 15, 15, 0.932);
-        border-color:rgba(228, 15, 15, 0.932);
+        color:#e40f0fee;
+        background-color: #e40f0fee;
+        border-color:#e40f0fee;
         box-shadow:none;
     }
     40%,100%{
         width: 100%;
-        color:rgba(228, 15, 15, 0.932);
+        color:#e40f0fee;
     }
 
 }
@@ -782,3 +829,34 @@ form{
     }
 }
 
+/* Modal */
+
+.showModal{
+    animation: show_modal 1s;
+}
+
+.hiddenModal{
+    animation: hidden_modal 1s;
+}
+
+@keyframes show_modal{
+    0%, 55% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    55%, 95%{
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes hidden_modal{
+    0%, 55% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+    55%, 95% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}

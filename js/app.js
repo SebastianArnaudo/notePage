@@ -2,14 +2,19 @@
 const cards = document.getElementById("cardTable");
 const cardSection = document.getElementById("cardSection");
 
+let unfoldedCard = "";
+
 cards.addEventListener("click",(e)=>{
+
     if(e.target.matches(".delete")){
         e.stopPropagation()
-        cardDelete(e)
+        cardDelete(e);
+        
     } else if(e.target.matches(".info")){
         e.stopPropagation()
         
         const typeCard = e.target.parentElement.parentElement.className;
+        unfoldedCard = e.target.parentElement.parentElement;
 
         if(typeCard=="event card"){
             const title= e.target.parentElement.parentElement.children[0].children[0].textContent;
@@ -17,115 +22,112 @@ cards.addEventListener("click",(e)=>{
             const date= e.target.parentElement.parentElement.children[1].children[0].textContent;
 
             vewCard(title,desc,date)
+
         } else if(typeCard == "task card"){
             const title= e.target.parentElement.parentElement.children[0].children[0].textContent;
             const desc= e.target.parentElement.parentElement.children[0].children[1].textContent;
+            const date = false;
 
-            vewTask(title,desc)
+            vewCard(title,desc,date)
+
         } else if (typeCard == "list card"){
             const title= e.target.parentElement.parentElement.children[0].children[0].textContent;
-            const list= e.target.parentElement.parentElement.children[1].children[0];
+            const desc= e.target.parentElement.parentElement.children[1].children[0];
+            const date = "list";
 
-            vewList(title,list)
+            vewCard(title,desc,date)
         }
     }
 })
 
-//* Ver tarea
-const modalVew = document.getElementById("modalCardContainer");
+// *Ver tarea
+
+const modalVew = document.getElementById("modalCard");
 
 const close = document.getElementById("closeButton");
 
 close.addEventListener("click",()=> closeCard());
 
+function showModal(){
+    modalVew.classList.replace("modalH","showModal");
+}
+function hiddenModal(){
+    modalVew.classList.add("hiddenModal");
+}
 
 function vewCard(title,desc,date){
+    showModal();
 
+    clearDescModal();
     const titleCModal = document.getElementById("titelCardModal");
-    const descModal = document.getElementById("descripcionModal");
+    const descModal = document.getElementById("descrip");
     const dateModal = document.getElementById("dateModal");
 
-    const descContainer = document.getElementById("descrip");
-    const listModal = document.getElementById("descripList");
-
-    modalVew.style.display="flex";
-    descContainer.style.display="block";
-    listModal.style.display="none";
-    dateModal.style.display = "block";
-
+    // modalVew.style.display="block";
     titleCModal.innerHTML = title;
-    descModal.innerHTML = desc;
-    dateModal.innerHTML = date;
-}
 
-function vewTask(title,desc){
+    if (date == "list"){
+        const ul = document.createElement("ul");
 
-    const titleCModal = document.getElementById("titelCardModal");
-    const descModal = document.getElementById("descripcionModal");
-    const dateModal = document.getElementById("dateModal");
+        descModal.appendChild(ul);
 
-    const descContainer = document.getElementById("descrip");
-    const listModal = document.getElementById("descripList");
+        const listElements = desc.children;
+        let count = 0;
+        let liModal= []
 
-    modalVew.style.display="flex";
-    descContainer.style.display="block";
-    listModal.style.display="none";
-    dateModal.style.display = "none";
+        for(i of listElements){
+            liModal.push(desc.children[count].innerHTML)
+            count +=1
+        }
 
-    titleCModal.innerHTML = title;
-    descModal.innerHTML = desc;
-}
+        for(let index = 0; index < liModal.length; index++){
+            let li;
+            li = document.createElement("li");
+            
+            ul.appendChild(li);
+            li.innerHTML += liModal[index];
+        }
 
-function vewList(title,list){
+    } else if (date != false){
+        const p = document.createElement("p");
+        descModal.appendChild(p);
 
-    const titleCModal = document.getElementById("titelCardModal");
-    const descContainer = document.getElementById("descrip");
-    const listModal = document.getElementById("descripList");
-    const dateModal = document.getElementById("dateModal");
-    const itemsModal = document.getElementById("itemsModal");
+        p.innerHTML = desc;
+        dateModal.innerHTML = date;
 
-    const listElements = list.children;
-    let count = 0;
-    
+    } else{
+        const p = document.createElement("p");
+        descModal.appendChild(p);
 
-    let liModal= []
-
-    for(i of listElements){
-        liModal.push(list.children[count].innerHTML)
-        count +=1
+        p.innerHTML = desc;
     }
-
+    setTimeout(()=>{
+        modalVew.classList.remove("showModal");
+    },1000)
     
-    modalVew.style.display="flex";
-    descContainer.style.display="none";
-    listModal.style.display="block";
-    dateModal.style.display = "none";
-
-    titleCModal.innerHTML = title;
-
-
-    for(let index = 0; index < liModal.length; index++){
-        let li;
-        li = document.createElement("li");
-        
-        itemsModal.appendChild(li)
-        li.innerHTML += liModal[index]
-    }
 }
 
-function clearItemsModal() {
-    while (itemsModal.firstChild) {
-        itemsModal.removeChild(itemsModal.firstChild);
+function clearDescModal() {
+    let dateModal = document.getElementById("dateModal");
+    const descModal = document.getElementById("descrip");
+
+    dateModal.innerHTML = ""
+
+    while (descModal.firstChild) {
+        descModal.removeChild(descModal.firstChild);
     }
 }
 
 function closeCard(){
-    clearItemsModal(); // Llama a la función para eliminar los elementos
-    modalVew.style.display="none";
-
+    hiddenModal()
+    unfoldedCard = "";
+    setTimeout(()=>{
+        modalVew.classList.remove("hiddenModal");
+        modalVew.classList.add("modalH");
+    },900)
 }
 
-//* FILTRAR TARJETA *//
+//* FILTRAR TARJETA 
 
 const allFilter = document.getElementById("all");
 const taskFilter = document.getElementById("tasks");
@@ -336,7 +338,7 @@ function filterList(){
     cardWatcher(ce,css);
 }
 
-//* FORMULARIO *//
+//* FORMULARIO 
 
 //* CAMBIAR DE FORMULARIO
 
@@ -409,7 +411,7 @@ function changeToTask(){
                 itemImput[i].classList.replace("hiddenInputsList","liHidden");
                 listItems.classList.add("hidden");
             }
-        },960)
+        },954)
     }
 
     if(!eventConten.classList.contains("hidden")){
@@ -418,7 +420,7 @@ function changeToTask(){
             eventD.classList.replace("hiddenDate","edHidden");
             eventConten.classList.add("hiddenDate");
             eventConten.classList.replace("hiddenDate","hidden");
-        },960)
+        },954)
     }   
 
     
@@ -442,14 +444,14 @@ function changeToList(){
         setTimeout(()=>{
             eventD.classList.replace("hiddenDate","edHidden");
             eventConten.classList.add("hidden");
-        },960)
+        },949)
     }   
 
     cardInfo.classList.add("hiddenInput");
     setTimeout(()=>{
         cardInfoContent.classList.add("hidden");
         cardInfo.classList.replace("hiddenInput","hidden");
-    },960)
+    },949)
 
     setTimeout(()=>{
         listItems.classList.remove("hidden");
@@ -475,6 +477,19 @@ const itemL = document.querySelectorAll(".itemList").textContent;
 
 const saveButton = document.getElementById("saveCard");
 
+const alert = document.getElementById("alertConteiner");
+const closeAlertButton = document.getElementById("closeAlert");
+
+function showAlert(t){
+    const alertP = document.getElementById("alertError");
+    alert.style.display="flex";
+    alertP.innerHTML = t;
+}
+
+closeAlertButton.addEventListener("click",()=>{
+    alert.style.display="none";
+})
+
 saveButton.addEventListener("click",(e)=>{
 
     e.preventDefault();
@@ -490,10 +505,13 @@ saveButton.addEventListener("click",(e)=>{
 
     const listItems= document.querySelectorAll(".itemList");
 
+    let errorType;
+
     switch (true) {
         case checkTask:
             if (title == "" || tInfo == "") {
-                alert("No se permiten campos vacios");
+                errorType="No se permiten campos vacios";
+                showAlert(errorType);
             } else {
                 let date = "";
                 createCard(title, tInfo, date);
@@ -501,13 +519,13 @@ saveButton.addEventListener("click",(e)=>{
             break;
         case checkEvent:
             if (title == "" || tInfo == "" || eDate == "") {
-                alert("No se permiten campos vacios");
+                errorType="No se permiten campos vacios";
+                showAlert(errorType);
             } else {
                 createCard(title, tInfo, eDate);
-
-            }
                 titleCard.value = "";
-    eventD.value = "";
+                eventD.value = "";
+            }
             break;
         default:
             let items = [];
@@ -523,9 +541,11 @@ saveButton.addEventListener("click",(e)=>{
             }
         
             if (title == "") {
-                alert("Ingrese un titulo");
+                errorType="Ingrese un titulo";
+                showAlert(errorType);
             } else if (items == "") {
-                alert("De haber por lo menos un item en la lista");
+                errorType="De haber por lo menos un item en la lista";
+                showAlert(errorType);
             } else {
                 createCard(title,items,date);
             }
@@ -538,14 +558,18 @@ saveButton.addEventListener("click",(e)=>{
 
 
 
-//*CREAR TARJETAS *//
+//*CREAR TARJETAS 
 
 function createCard(title,desc,date){
     const t = title;
     const d = desc;
 
     const bit= "Ver";
-    const bdt= "X";
+    const bdt= "delete";
+    
+    const btnSpan = document.createElement("span");
+    btnSpan.setAttribute("class","material-symbols-outlined");
+    btnSpan.textContent=bdt;
 
     const card = document.createElement("div");
     const cardD = document.createElement("section");
@@ -559,7 +583,7 @@ function createCard(title,desc,date){
     h1.textContent=t;
 
     btnI.textContent=bit;
-    btnD.textContent=bdt;
+    btnD.textContent="X";
 
     card.setAttribute("class","task");
     card.classList.add("card");
@@ -610,8 +634,8 @@ function createCard(title,desc,date){
     else if (date != "list"){
 
         let dateValid = date.split("");
-        let day = Number(dateValid[8] + dateValid[9]);
-        let month = Number(dateValid[5] + dateValid[6]);
+        let day = dateValid[8] + dateValid[9];
+        let month = dateValid[5] + dateValid[6];
 
         dateValid= [day +"/"+ month];
 
@@ -677,13 +701,17 @@ function createCard(title,desc,date){
     setInterval(depureShow, 1500);
 }
 
-//* BORRAR TARJETAS *//
+//* BORRAR TARJETAS 
 
 function cardDelete(e){
+
+    const item = e.target.parentElement.parentElement;
     let cardsElement = document.querySelectorAll(".card");
     let ce;
 
-    const item = e.target.parentElement.parentElement;
+    if(item == unfoldedCard){
+        closeCard()
+    }
 
     ce = item.classList[0];
 
@@ -706,7 +734,7 @@ function cardDelete(e){
     setTimeout(del,2000);
 }
 
-//* CONTADORES DE TARJETAS *//
+//* CONTADORES DE TARJETAS 
 
 const message = document.getElementById("message");
 

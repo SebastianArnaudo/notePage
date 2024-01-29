@@ -5,9 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notas</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
 </head>
 <body>
+    <section class="alertConteiner" id="alertConteiner">
+        <div class="alert" id="alert">
+            <section class="alertTitle">
+                <h1>Alerta</h1>
+            </section>
+            <div class="alertContent" id="alertContent">
+                <p class="alertError" id="alertError">
+                    Cuidado con...
+                </p>
+            </div>
+            <section class="buttonAlertContent">
+                <button class="closeAlert" id="closeAlert"> De acuerdo </button>
+            </section>
+
+        </div>
+    </section>
+
     <nav>
         <button class="navButton active" id="all">
             <span></span>
@@ -31,35 +49,31 @@
         </button>
     </nav>
 
-    <!-- Modals -->
+    <!-- Modal -->
+    <section class="modal modalH" id="modalCard">
+        <section class="closeButtonContent">
+            <button class="closeButton" id="closeButton">X</button>
+        </section>
 
-    <section class="modalContainer" id="modalCardContainer">
-        <div class="modal" id="modalCard"> 
-            <section class="modalContent cardContent" id="modalContent">
-                <section class="title">
-                    <h1 id="titelCardModal"></h1>
-                    <p id="dateModal"></p>
-                </section>
-                
-                <section class="descrip" id="descrip">
-                    <p id="descripcionModal">
-                        
-                    </p>
-                </section>
+        <section class="modalContent" id="modalContent">
+            <div class="title">
 
-                <section class="descrip descripList" id="descripList">
-                    <ul id="itemsModal">
+                <h1 id="titelCardModal"></h1>
+                <p id="dateModal"></p>
 
-                    </ul>
-                </section>
+            </div>
+
+            <div class="descrip" id="descrip">
+
+            </div>
+
+            <section class="descrip descripList" id="descripList">
+                <ul id="itemsModal">
+
+                </ul>
             </section>
-            
-            <section class="buttons">
-                <button class="closeButton" id="closeButton">Cerrar</button>
-            </section>
-        </div>
+        </section>
     </section>
-
 
     <!-- Contenedor Principal -->
     <section class="maincontainer">
@@ -78,7 +92,7 @@
                 </div>
 
                 <section class="inputContainer">
-                    <input class="titleInput" type="text" id="cardTitle"  placeholder="Agregue un tiulo a la tarjeta">
+                    <input class="titleInput" type="text" id="cardTitle"  placeholder="Tiulo de la tarjeta">
 
                     <!-- Nota de tipo Task -->
                     <section class="containerTask " id="containerTask">
@@ -94,18 +108,17 @@
 
                     <!-- Nota de tipo List -->
                     <section class="containerList hidden" id="containerList">
-                        <input type="text" id="item-1" class="itemList liHidden" placeholder="Ingrese un item a la lista">
-                        <input type="text" id="item-2" class="itemList liHidden" placeholder="Ingrese un item a la lista">
-                        <input type="text" id="item-3" class="itemList liHidden" placeholder="Ingrese un item a la lista">
-                        <input type="text" id="item-4" class="itemList liHidden" placeholder="Ingrese un item a la lista">
-                        <input type="text" id="item-5" class="itemList liHidden" placeholder="Ingrese un item a la lista">
+                        <input type="text" id="item-1" class="itemList liHidden" placeholder="Ingrese un item">
+                        <input type="text" id="item-2" class="itemList liHidden" placeholder="Ingrese un item">
+                        <input type="text" id="item-3" class="itemList liHidden" placeholder="Ingrese un item">
+                        <input type="text" id="item-4" class="itemList liHidden" placeholder="Ingrese un item">
+                        <input type="text" id="item-5" class="itemList liHidden" placeholder="Ingrese un item">
                     </section>
                 </section>
                 
                 <button  class="formButton" id="saveCard">Guardar</button>
             </form>
         </section>
-
         <!-- Bandeja de notas -->
         <section class="cardTable" id="cardTable">
 
@@ -173,6 +186,7 @@
                 </div>
             </section>
         </section>
+        
     </section>
 
     <script src="js/app.js"></script>
