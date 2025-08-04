@@ -2,45 +2,56 @@
 const cards = document.getElementById("cardTable");
 const cardSection = document.getElementById("cardSection");
 
-let unfoldedCard = "";
+let unfoldedCard = ""; //Variable en la que se guarda la tarjeta desplegada para posterior comparación.
 
 cards.addEventListener("click",(e)=>{
 
-    if(e.target.matches(".delete")){
+    //La variable "e" corresponde al elemento al que se clica dentro de la sección "cards".
+
+    if(e.target.matches(".delete")){ //Si la clase del elemento es "delete" (osea se el boton de "borrar")
+        //Se detienen todos los procesos automaticos y se llama a la funcion "cardDelete" pasandole como valor el elemento seleccionado.
         e.stopPropagation()
         cardDelete(e);
         
-    } else if(e.target.matches(".info")){
+    } else if(e.target.matches(".info")){ //Si por el contrario la clase del elementro es "info" (osea se, el botón de "ver")
+        //Se detienen todos los procesos automaticos.
         e.stopPropagation()
         
-        const typeCard = e.target.parentElement.parentElement.className;
-        unfoldedCard = e.target.parentElement.parentElement;
+        unfoldedCard = e.target.parentElement.parentElement; 
+        //Se guarda en la variable "unfoldedCard" el elemento padre del contenedor del botón (La tarjeta a la que pertenece) 
 
+        const typeCard = e.target.parentElement.parentElement.className; 
+        //Y se almacena en una constante la clase de dicha tarjeta.
+
+        //Segun sea dicha clase...
         if(typeCard=="event card"){
-            const title= e.target.parentElement.parentElement.children[0].children[0].textContent;
-            const desc= e.target.parentElement.parentElement.children[0].children[1].textContent;
-            const date= e.target.parentElement.parentElement.children[1].children[0].textContent;
 
-            vewCard(title,desc,date)
+            //Se almacena en difeerentes constantes los contenidos de la tarjeta.
+
+            const title= e.target.parentElement.parentElement.children[0].children[0].textContent; //Contenido de la seccion titulo de la tarjeta
+            const desc= e.target.parentElement.parentElement.children[0].children[1].textContent; //Contenido de la seccion descripcion de la tarjeta
+            const date= e.target.parentElement.parentElement.children[1].children[0].textContent; //Contenido de la seccion fecha de la tarjeta
+
+            vewCard(title,desc,date) //Y se ejecuta la funcionque que despliega la tarjeta con los contenidos de la misma. 
 
         } else if(typeCard == "task card"){
             const title= e.target.parentElement.parentElement.children[0].children[0].textContent;
             const desc= e.target.parentElement.parentElement.children[0].children[1].textContent;
-            const date = false;
+            const date = "task"; //En este caso no existe una "fecha" en las tarjetas de clase "task", por lo que el valor de la constante es "task".
 
             vewCard(title,desc,date)
 
         } else if (typeCard == "list card"){
             const title= e.target.parentElement.parentElement.children[0].children[0].textContent;
             const desc= e.target.parentElement.parentElement.children[1].children[0];
-            const date = "list";
+            const date = "list"; //En este caso no existe una "fecha" en las tarjetas de clase "list", por lo que el valor de la constante es "list".
 
             vewCard(title,desc,date)
         }
     }
 })
 
-// *Ver tarea
+//* Ver tarea
 
 const modalVew = document.getElementById("modalCard");
 
@@ -49,37 +60,45 @@ const close = document.getElementById("closeButton");
 close.addEventListener("click",()=> closeCard());
 
 function showModal(){
+    //Se remplaza del elemento la clase "modalH", que le da un display none, por la clase "showModal"
+    //que inicia una animacion para su despliegue.
     modalVew.classList.replace("modalH","showModal");
 }
+
 function hiddenModal(){
+    //Se le añade la clase "hiddenModal" que incia una animacion de desaparicion. 
     modalVew.classList.add("hiddenModal");
 }
+
+const titleCModal = document.getElementById("titelCardModal"); //Elemento "h1" en el modal que corresponde al titulo.
+const descModal = document.getElementById("descrip"); //Contenedor de la descripcion en el modal.
+const dateModal = document.getElementById("dateModal"); //Elemento "p" en el modal que corresponde a la fecha.
 
 function vewCard(title,desc,date){
     showModal();
 
-    clearDescModal();
-    const titleCModal = document.getElementById("titelCardModal");
-    const descModal = document.getElementById("descrip");
-    const dateModal = document.getElementById("dateModal");
+    clearDescModal(); //Se "limpian" los contenidos del modal para mostrar los nuevos.
 
-    // modalVew.style.display="block";
-    titleCModal.innerHTML = title;
+    titleCModal.innerHTML = title; //El modal adquiere el titulo de la tarjeta.
 
-    if (date == "list"){
+    if (date == "list"){ //Si la variable date corresponde a "list"...
+
+        //Se crea un elemento "ul" que se insertara en la seccion de la descripcion del modal.
         const ul = document.createElement("ul");
-
         descModal.appendChild(ul);
 
         const listElements = desc.children;
         let count = 0;
-        let liModal= []
+        let liModal= [];
 
+        //Se crea un array en el que se insertaran el valor de cada uno de los elementos hijos de la seccion descripcion de la tarjeta.
         for(i of listElements){
             liModal.push(desc.children[count].innerHTML)
             count +=1
         }
 
+        //Se crea un elemento "li" por cada elemento en el array anteriormente creado.
+        //Recibiendo su valor y posteriormente siendo incertado en el elemento "ul"
         for(let index = 0; index < liModal.length; index++){
             let li;
             li = document.createElement("li");
@@ -88,19 +107,26 @@ function vewCard(title,desc,date){
             li.innerHTML += liModal[index];
         }
 
-    } else if (date != false){
+    }else if (date == "task"){ //Si la variable date corresponde a "task"...
+
+        //Se crea un elemeto "p" que se inserta en la seccion de la descripcion del modal.
+        //Se le asigna el valor de la descripcion de la tarjeta seleccionada.
         const p = document.createElement("p");
         descModal.appendChild(p);
 
         p.innerHTML = desc;
-        dateModal.innerHTML = date;
-
-    } else{
+    }else {
+        //Si ninguna de las anteriores condiciones se cumple, aparte de crearse el elemento "p".
         const p = document.createElement("p");
         descModal.appendChild(p);
 
         p.innerHTML = desc;
-    }
+
+        //Se asigna al parrafo de la fecha el valor de la variable "date".
+        dateModal.innerHTML = date; 
+    } 
+
+    //Luego de que la animacion termine de ejecutarse se remueve del elemento modal la clase "showModal".
     setTimeout(()=>{
         modalVew.classList.remove("showModal");
     },1000)
@@ -108,31 +134,42 @@ function vewCard(title,desc,date){
 }
 
 function clearDescModal() {
-    let dateModal = document.getElementById("dateModal");
-    const descModal = document.getElementById("descrip");
+    dateModal.innerHTML = ""; //Se vacia el elemento "dateModal"
 
-    dateModal.innerHTML = ""
-
+    //Se eliminan todos los elementos creados en la seccion de descripcion.
     while (descModal.firstChild) {
         descModal.removeChild(descModal.firstChild);
     }
 }
 
 function closeCard(){
-    hiddenModal()
-    unfoldedCard = "";
+    hiddenModal();
+
+    unfoldedCard = ""; //Se vacia la variable "unfoldedCard".
+
+    //Momentos antes de que se termine la animacion se remplaza la clase "hiddenModal" por la clase "modalH", 
+    //que le da un display none.
     setTimeout(()=>{
         modalVew.classList.remove("hiddenModal");
         modalVew.classList.add("modalH");
     },900)
 }
 
-//* FILTRAR TARJETA 
+//* FILTRAR TARJETA *//
+//El objetico de la funcione "filterAll" es quitar los filtros aplicados,
+//mientras que el de "filterTask", "filterEvent" y "filterList" es mostrar solo las tarjetas
+//de tipo "task", "event" o "list" respectivamente.
+//Para ello se utilizan las clases "cardShow" que incia una animacion de despliegue, 
+//"cardHidden" que inicia una animacion de desaparicion.
+//Las mismas deben ser eliminadas cuando la animacion termina para poder ser activada correctamente la proxima vez.
+//Y la clase "cardFilted" que da a las tarjetas un display none.
 
-const allFilter = document.getElementById("all");
-const taskFilter = document.getElementById("tasks");
-const eventFilter = document.getElementById("events");
-const listFilter = document.getElementById("lists");
+
+
+const allFilter = document.getElementById("all"); //Boton en el nav para mostrar todas las tarjetas.
+const taskFilter = document.getElementById("tasks"); //Boton en el nav para mostrar solo las tarjetas de tipo "task".
+const eventFilter = document.getElementById("events"); //Boton en el nav para mostrar solo las tarjetas de tipo "event".
+const listFilter = document.getElementById("lists"); //Boton en el nav para mostrar solo las tarjetas de tipo "list".
 
 allFilter.addEventListener("click",()=> filterAll());
 taskFilter.addEventListener("click",()=> filterTask());
@@ -140,6 +177,9 @@ eventFilter.addEventListener("click",()=> filterEvent());
 listFilter.addEventListener("click",()=> filterList());
 
 function depureShow(){
+
+    //recorre todas las tarjetas y elimina la clase "cardShow".
+
     const events = document.querySelectorAll(".event");
     const lists = document.querySelectorAll(".list");
     const tasks = document.querySelectorAll(".task");
@@ -158,11 +198,16 @@ function depureShow(){
 }
 
 function filterAll(){
+    //Recorre todas las tarjetas y comprueva si contienen la clase "cardFilted".
+    //Si es el caso la remplazará por la clase "cardShow", que como se dijo anteriormente, inicia una animacion de despliegue.
+    //Llamando a la funcion "depureShow" para eliminar esta clase una vez terminado el proceso.
+
     const events = document.querySelectorAll(".event");
     const lists = document.querySelectorAll(".list");
     const tasks = document.querySelectorAll(".task");
 
-    let cardsElement = document.querySelectorAll(".card");
+    //Establece la clase 'active' para resaltar el filtro activo
+
     allFilter.classList.add("active");
     taskFilter.classList.remove("active");
     eventFilter.classList.remove("active");
@@ -193,13 +238,22 @@ function filterAll(){
     }
 
     setTimeout(depureShow,1500)
-    let ce = cardsElement.length;
+
+    //La funcion "cardWatcher" y sus parametros tienen como objetivo
+    //comprobar el filtro activo y la cantidad de tarjetas que se despliegan con el mismo.
+    //para, de ser necesario, hacer aparecer (o desaparecer) un mensaje.
+
+    let ce = document.querySelectorAll(".card").length;
     let css = "all"
 
     cardWatcher(ce,css);
 }
 
 function filterTask(){
+
+    //Recorre todas las tarjetas y de ser necesario despliega las tarjetas de clase "task"
+    //y hace desaparecer las tarjetas de otras clases.
+
     const events = document.querySelectorAll(".event");
     const lists = document.querySelectorAll(".list");
     const tasks = document.querySelectorAll(".task");
@@ -244,6 +298,10 @@ function filterTask(){
 }
 
 function filterEvent(){
+
+    //Recorre todas las tarjetas y de ser necesario despliega las tarjetas de clase "event"
+    //y hace desaparecer las tarjetas de otras clases.
+
     const events = document.querySelectorAll(".event");
     const lists = document.querySelectorAll(".list");
     const tasks = document.querySelectorAll(".task");
@@ -292,6 +350,10 @@ function filterEvent(){
 }
 
 function filterList(){
+
+    //Recorre todas las tarjetas y de ser necesario despliega las tarjetas de clase "list"
+    //y hace desaparecer las tarjetas de otras clases.
+
     const events = document.querySelectorAll(".event");
     const lists = document.querySelectorAll(".list");
     const tasks = document.querySelectorAll(".task");
@@ -338,37 +400,45 @@ function filterList(){
     cardWatcher(ce,css);
 }
 
-//* FORMULARIO 
+//* CAMBIAR FORMULARIO *//
 
-//* CAMBIAR DE FORMULARIO
+//En la siguiente seccion se proporciona la logica detras del cambio en los elementos del formulario. mrdiante tres funciones similares
 
-//Checkbox
-
+//* Checkbox
 const formTask = document.getElementById("task");
 const formEvent = document.getElementById("event");
 const formList = document.getElementById("list");
 
-//Formularios
+//* Inputs
+const cardInfoContent = document.getElementById("containerTask"); 
+//Contenedor del input tipo textarea compartido por las tarjetas  tipo "task" y "event".
 
-const cardInfoContent = document.getElementById("containerTask");
+const eventConten = document.getElementById("containerEvent"); //Contenedor del input tipo date de la tarjeta tipo "event".
+const eventD = document.getElementById("dateEvent"); //input tipo date.
 
-const eventD = document.getElementById("dateEvent");
-const eventConten = document.getElementById("containerEvent");
+const listItems = document.getElementById("containerList"); //Contenedor de los inputs tipo text de la tarjeta tipo "list".
 
-const listItems = document.getElementById("containerList");
-const lIF = document.querySelectorAll("#item");
+const cardInfo = document.getElementById("cardDescription"); 
+//input tipo textarea compartido por las tarjetas tipo "task" y "event".
 
-const cardInfo = document.getElementById("cardDescription");
-
-const itemImput = document.querySelectorAll(".itemList");
+const itemImput = document.querySelectorAll(".itemList"); //inputs tipo text.
 
 
 formEvent.addEventListener("click",()=> changeToEvent());
 formList.addEventListener("click",()=> changeToList());
 formTask.addEventListener("click",()=> changeToTask());
 
+//La funciones "changeToEvent", "changeToTask" y "changeToList" tienen como objetivo habilitar los elementos 
+//nesesarios para la creacion de las tarjetas de clase "event", "task" y "list" respectivamente.
+
+//Cada tipo de input y su contenedor cuenta con una clase especifica que da inicio a una animacion de desaparicion 
+//y una clase que da inicio a una animacion de despliegue. Cuando la animacion termina debe eliminarse la clase,
+//para poder ser activada correctamente la proxima vez.
+
 
 function changeToEvent(){
+    //De ser necesario, oculta los inputs tipo text y su contenedor,
+    //donde irian los items de la tarjeta de clase "list".
     if(!listItems.classList.contains("hidden")){
         for (let i = 0; i < itemImput.length; i++) {
             itemImput[i].classList.add("hiddenInputsList");
@@ -381,6 +451,8 @@ function changeToEvent(){
         },900)
     }
     
+    //De ser necesario, despliega el input tipo textarea y su contenedor, donde iria la descripcion de la tarjeta.
+    //Despliega el input tipo date y su contenedior, donde iria la fecha del evento.
     if(cardInfoContent.classList.contains("hidden")){
         setTimeout(()=>{
             cardInfoContent.classList.remove("hidden");
@@ -402,6 +474,7 @@ function changeToEvent(){
 }
 
 function changeToTask(){
+
     if(!listItems.classList.contains("hidden")){
         for (let i = 0; i < itemImput.length; i++) {
             itemImput[i].classList.add("hiddenInputsList");
@@ -414,6 +487,8 @@ function changeToTask(){
         },954)
     }
 
+    //De ser necesario, oculta el input de tipo date y su contenedor,
+    //donde iria la fecha del evento de las tarjetas de clase "event"
     if(!eventConten.classList.contains("hidden")){
         eventD.classList.add("hiddenDate");
         setTimeout(()=>{
@@ -421,15 +496,16 @@ function changeToTask(){
             eventConten.classList.add("hiddenDate");
             eventConten.classList.replace("hiddenDate","hidden");
         },954)
-    }   
-
+    }
     
-    setTimeout(()=>{
-        if(cardInfoContent.classList.contains("hidden")){
+    //De ser necesario, despliega el input tipo textarea y su contenedor, 
+    //donde iria la descripcion de la tarjeta.
+    if(cardInfoContent.classList.contains("hidden")){
+        setTimeout(()=>{
             cardInfoContent.classList.remove("hidden");
             cardInfo.classList.replace("hidden","showInput");            
-        }
-    },955)
+        },955)
+    }
 
     setTimeout(() => {
         cardInfo.classList.remove("showInput");
@@ -439,6 +515,7 @@ function changeToTask(){
 
 function changeToList(){
 
+    //Oculta los elementos inecesarios
     if(!eventConten.classList.contains("hidden")){
         eventD.classList.add("hiddenDate");
         setTimeout(()=>{
@@ -453,6 +530,8 @@ function changeToList(){
         cardInfo.classList.replace("hiddenInput","hidden");
     },949)
 
+    //Descpliega  los inputs tipo text y su contenedor,
+    //donde irian los items de la tarjeta de clase "list".
     setTimeout(()=>{
         listItems.classList.remove("hidden");
         for (let i = 0; i < itemImput.length; i++) {
@@ -464,74 +543,72 @@ function changeToList(){
             }
         }, 950);
     },955)
-
 }
 
-//* VALIDAR FORMULAIO
+//* VALIDAR FORMULAIO *//
 
-const formCard = document.getElementById("formCard");
+//En este segmento se realiza la logica detras del funcionamiento del formulario para crear tarjeta.
+//Con su control de errores y el manejo de un pop up a modo de "alerta" en caso de cometerse uno.
 
-const titleCard = document.getElementById("cardTitle");
+//La mayoria de los elementos involucrados ya son invocados en la seccion anterior.
 
-const itemL = document.querySelectorAll(".itemList").textContent;
+const formCard = document.getElementById("formCard"); //Contenedor del formulario.
 
-const saveButton = document.getElementById("saveCard");
+const titleCard = document.getElementById("cardTitle"); //Input donde se ingresa el titulo de la tarjeta. 
 
-const alert = document.getElementById("alertConteiner");
+//Referenciamos especificamente el conteido de los inputs del formulario de "list".
+const itemL = document.querySelectorAll(".itemList").textContent; 
+
+const saveButton = document.getElementById("saveCard"); 
+
+const alert = document.getElementById("alertConteiner"); //Contenedor del pop ap "alerta".
 const closeAlertButton = document.getElementById("closeAlert");
 
 function showAlert(t){
+    //La funcion "showAlert" despliega la alerta.
+    //El parametro "t" es una cadena de texto que señala el error cometido.
     const alertP = document.getElementById("alertError");
     alert.style.display="flex";
     alertP.innerHTML = t;
 }
 
 closeAlertButton.addEventListener("click",()=>{
+    //Oculta la alerta.
     alert.style.display="none";
 })
 
 saveButton.addEventListener("click",(e)=>{
 
-    e.preventDefault();
+    e.preventDefault(); //Se detienen los procesos automaticos del boton.
 
-    const checkTask = formTask.checked;
+    //Se almacena el estado "check" de las checkbox.
+    const checkList = formList.checked; 
     const checkEvent = formEvent.checked;
 
-    let title = titleCard.value;
-    
-    let tInfo = cardInfo.value;
+    let title = titleCard.value; //Se almacena el valor del input "titelCard".
+    let tInfo = cardInfo.value; //Se almacena el valor del input "cardInfo".
+    let eDate = eventD.value; //Se almacena el valor del input "eventD".
 
-    let eDate = eventD.value;
+    //Se almacenan todos los inputs con la clase "itemList", donde irian los items a agregar en la targeta de tipo "list".
+    const listItems = document.querySelectorAll(".itemList"); 
 
-    const listItems= document.querySelectorAll(".itemList");
+    let errorType; //Variable donde se almacena la naturaleza del error cometido.
 
-    let errorType;
+    //Como se dijo antes, segun el checkbox seleccionado se mostraran diferentes elementros en el formulario.
 
     switch (true) {
-        case checkTask:
-            if (title == "" || tInfo == "") {
-                errorType="No se permiten campos vacios";
-                showAlert(errorType);
-            } else {
-                let date = "";
-                createCard(title, tInfo, date);
-            }
-            break;
-        case checkEvent:
-            if (title == "" || tInfo == "" || eDate == "") {
-                errorType="No se permiten campos vacios";
-                showAlert(errorType);
-            } else {
-                createCard(title, tInfo, eDate);
-                titleCard.value = "";
-                eventD.value = "";
-            }
-            break;
-        default:
+         //Se comprueba que configuracion esta activa.
+        case checkList:
+
+            //Si checkList esta seleccionado...
+
+            //Se crea un array vacio y un contador con valor "0".
+            
             let items = [];
             let count = 0;
-            let date = "list"
-        
+
+            // Recorre los elementos almacenados en la variable "listItems" mediante el método "querySelectorAll",
+            // y guarda en el array "items" solo aquellos que tengan un valor diferente a null.
             for (let itemL = 0; itemL < listItems.length; itemL++) {
                 let i = listItems[count].value;
                 if (i != "") {
@@ -540,36 +617,74 @@ saveButton.addEventListener("click",(e)=>{
                 count++;
             }
         
+            // Comprueba si la entrada del título del formulario está vacía
+            //y si el array "items" también lo está.
+            //se ejecuta la funcion "showAlert" con el error correspondiente como parametro si alguno lo esta.
             if (title == "") {
                 errorType="Ingrese un titulo";
                 showAlert(errorType);
             } else if (items == "") {
-                errorType="De haber por lo menos un item en la lista";
+                errorType="Debe haber por lo menos un item en la lista";
                 showAlert(errorType);
             } else {
+                // Ejecuta la función "createCard" con los parámetros correspondientes a los datos ingresados,
+                // y la variable "date" con valor "list" debido a la inexistencia de dicho input en esta configuración de formulario.
+                let date = "list"
                 createCard(title,items,date);
+                
+                // Limpia los campos del formulario.
+                for (var i = 0; i < listItems.length; i++) {
+                    listItems[i].value = "";
+                }
+                
             }
-        
-            for (var i = 0; i < listItems.length; i++) {
-                listItems[i].value = "";
+            break;
+        case checkEvent:
+            //Si por el contrario "checkEvent" esta sekeccionado..
+
+            //Se comprueba si el título, la información y la fecha están vacíos.
+            if (title == "" || tInfo == "" || eDate == "") {
+                //Se muestra un mensaje de error si hay campos vacíos.
+                errorType="No se permiten campos vacios";
+                showAlert(errorType);
+            } else {
+                //Se crea la tarjeta utilizando los valores ingresados
+                //en el título, la información y la fecha.
+                createCard(title, tInfo, eDate);
+                titleCard.value = "";
+                eventD.value = "";
             }
+            break;
+        default:
+            // "formTask" cheked es el estado por default del formulario. 
+
+            //Del mismo modo se comprueba el estado de los inputs.
+            if (title == "" || tInfo == "") {
+                errorType="No se permiten campos vacios";
+                showAlert(errorType);
+            } else {
+                // Al no contar con el input de fecha,
+                //se utiliza la variable "date" con el valor "task".                
+                let date = "task";
+                createCard(title, tInfo, date);
+            }
+            
     }
 });
 
 
-
-//*CREAR TARJETAS 
-
+//* CREAR TARJETAS *//
 function createCard(title,desc,date){
+
+    //La funcion encargada de la creación de nuevas tarjetas
+    //resive como parametros desde un formulario un titlo, una descripcion y un elemento extra
+    //que varia segun el tipo de tarjeta que se cree.
+
     const t = title;
     const d = desc;
 
     const bit= "Ver";
     const bdt= "delete";
-    
-    const btnSpan = document.createElement("span");
-    btnSpan.setAttribute("class","material-symbols-outlined");
-    btnSpan.textContent=bdt;
 
     const card = document.createElement("div");
     const cardD = document.createElement("section");
@@ -604,6 +719,11 @@ function createCard(title,desc,date){
 
     card.appendChild(cardD);
 
+    // La tarjeta resultante puede tener tres o cuatro secciones, según su tipo:
+    // - Clase "task": incluye título y descripción, botón de despliegue y botón de borrado.
+    // - Clase "event": además de título y descripción, incluye una sección extra para la fecha del evento.
+    // - Clase "list": contiene solo título y una sección extra para los ítems de la lista.
+
     
     if(date == "list"){
         const cardI = document.createElement("section");
@@ -625,14 +745,13 @@ function createCard(title,desc,date){
         card.classList.add("card");
         card.classList.add("card","cardShow");
     }
-    else if (date == ""){
+    else if (date == "task"){
         const p = document.createElement("p");
         p.textContent=d;
         cardD.appendChild(p);
         card.appendChild(cardD);
     }
-    else if (date != "list"){
-
+    else {
         let dateValid = date.split("");
         let day = dateValid[8] + dateValid[9];
         let month = dateValid[5] + dateValid[6];
@@ -656,8 +775,15 @@ function createCard(title,desc,date){
         
     }
     
+    //El tipo de tarjeta viene dado por la variable extra, que ingresa un string con la clase o una fecha directamente.
+
     card.appendChild(cardO);
     card.appendChild(cardDel);
+
+    //Se verifica si hay algun filtro activo, 
+    //en caso de no coincidir con el filtro la tarjeta tendra una clase extra que evita su despliegue. 
+    //Si la tarjeta coincide con el filtro o no hay ninguno aparece al inicio de la bandeja
+    //con una clase extra que le da una animacion de despliegue. Que luego es depurada.
 
     setTimeout(()=>{
         cardSection.appendChild(card)
@@ -689,7 +815,6 @@ function createCard(title,desc,date){
                 break;
             default:
                 hiddenMessage();
-                depureMessage();
                 card.classList.add("cardShow");
         }
 
@@ -701,13 +826,17 @@ function createCard(title,desc,date){
     setInterval(depureShow, 1500);
 }
 
-//* BORRAR TARJETAS 
-
+//* BORRAR TARJETAS *//
 function cardDelete(e){
+    //La funcion cardDelete elimina una tarjeta recibiendo como parametro el boton dentro de la misma que la desencadena.
 
     const item = e.target.parentElement.parentElement;
     let cardsElement = document.querySelectorAll(".card");
     let ce;
+
+    //Se almacena en una variable el elemento padre del contenedor del boton (la tarjeta),
+    //un array con la cantidad de tarjetas existentes y la clase de la tarjeta seleccionada.
+    //Si esta desplegado un elemento PopUp dependiente de la tarjeta eliminada este se cierra automaticamente.
 
     if(item == unfoldedCard){
         closeCard()
@@ -715,8 +844,10 @@ function cardDelete(e){
 
     ce = item.classList[0];
 
+    //Al mismo tiempo se inicia una animacion que involucra tres elementos (el boton, su contenedor y la tarjeta en su totalidad).
     let cont = e.target.parentElement;
-    cont.classList.add("deleted")
+    cont.classList.add("deleted");
+
 
     let bConteiner = e.target.parentElement;
     let button = e.target;
@@ -726,6 +857,8 @@ function cardDelete(e){
     button.classList.add("deleted");
     card.classList.add("deleted");
 
+    //Una vez la animacion termina la tarjeta es eliminada
+    //y se hace una comprobacion de cantidad de elementos para controlar la presencia de un mensaje.
     function del(){
         cardSection.removeChild(item);  
         cardWatcherDeleter(ce,cardsElement);
@@ -734,78 +867,58 @@ function cardDelete(e){
     setTimeout(del,2000);
 }
 
-//* CONTADORES DE TARJETAS 
+//* CONTADORES DE TARJETAS *//
 
-const message = document.getElementById("message");
+//Las siguientes funciones tienen como fin la comparacion de elementos existentes en la bandeja de tarjetas,
+//visibles o no, y el manejo de un mensaje segun corresonda. 
+
+const message = document.getElementById("message"); //Conetenedor del mensaje.
 
 function showMessage(){
-    message.classList.add("showMessage");
-    setTimeout(()=>{
-        message.classList.replace("hiddenMessage","message");
-    },900)
+    //Cambia el estado del mensaje de "oculto" a "visible"
+    message.classList.replace("hiddenMessage","message");
 }
 
-function hiddenMessage(){
-        message.classList.add("messageHidden");
-        setTimeout(()=>{
-            message.classList.replace("message","hiddenMessage");
-        },900)  
-}
-
-function depureMessage(){
-    if(message.classList.contains("showMessage")){
-        message.classList.remove("showMessage");
-    } else if(message.classList.contains("messageHidden")){
-        message.classList.remove("messageHidden");
-    }
+function hiddenMessage(){    
+    //Cambia el estado del mensaje de "visible" a "oculto" 
+    message.classList.replace("message","hiddenMessage");
 }
 
 function cardWatcher(i,c){
-    switch(c){
+
+    // La función cardWatcher se ejecuta cada vez que un filtro se activa.
+    // Recibe un string con el tipo de filtro activo y
+    // un Array en el que se almacenan las tarjetas con la clase correspondiente al filtro.
+    // Esto permite controlar la presencia de un mensaje en la bandeja de tarjetas.
+
+    // Si el array está vacío y el mensaje está oculto, se desplegará.
+    // Si, en cambio, el mensaje está desplegado y el array tiene algún elemento, el mensaje se ocultará.
+
+    switch (c) {
         case "task":
-            if(i==0 && message.classList=="hiddenMessage"){
-                showMessage();
-                depureMessage();
-            } else if (i!=0 && message.classList == "message"){
-                hiddenMessage();
-                depureMessage();
-            }
-            break;
         case "event":
-            if(i==0 && message.classList=="hiddenMessage"){
-                showMessage();
-                depureMessage();
-            } else if (i!=0 && message.classList == "message"){
-                hiddenMessage();
-                depureMessage();
-            }
-            break;
         case "list":
-            if(i==0 && message.classList=="hiddenMessage"){
-                showMessage();
-                depureMessage();
-            } else if (i!=0 && message.classList == "message"){
-                hiddenMessage();
-                depureMessage();
-            }
-            break;
         default:
-            if(i==0 && message.classList=="hiddenMessage"){
+            if (i == 0 && message.classList == "hiddenMessage") {
                 showMessage();
-                depureMessage();
-            } else if (i!=0 && message.classList == "message"){
+            } else if (i != 0 && message.classList == "message") {
                 hiddenMessage();
-                depureMessage();
             }
             break;
     }
 }
 
 function newCardWatcher(f,c,cl){
+
+    // La función newCardWatcher se ejecuta cada vez que se crea una nueva tarjeta.
+    // Recibe como parámetros la clase de la tarjeta creada, el filtro activo y la tarjeta como elemento en sí.
+
+    // Si la clase de la tarjeta coincide con el filtro activo, la tarjeta aparecerá con una animación.
+    // Adicionalmente, se ocultará el mensaje si está desplegado. En caso contrario, la tarjeta no aparecerá.
+
+
     if(f == c && message.classList=="message"){
         hiddenMessage();
-        depureMessage();
-        
         cl.classList.add("cardShow");
     } else{
         cl.classList.add("cardFilted");
@@ -813,45 +926,44 @@ function newCardWatcher(f,c,cl){
 }
 
 function cardWatcherDeleter(ce,cardsElement){
+
+    // La función cardWatcherDeleter se ejecuta cada vez que se elimina una tarjeta.
+    // Recibe como parámetros la clase del elemento eliminado y un array con la cantidad de tarjetas existentes.
+
     let t = ce;
     let c = cardsElement;
     c = c.length;
-
-    c -= 1;
 
     let cardsTask = document.querySelectorAll(".task").length;
     let cardsEvent = document.querySelectorAll(".event").length;
     let cardsList = document.querySelectorAll(".list").length;
 
-    let tF = taskFilter.classList[1];
-    let eF = eventFilter.classList[1];
-    let lF = listFilter.classList[1];
-    let aF = allFilter.classList[1];
+    c -= 1; 
 
-    if(aF== "active"){
-        if(c==0){
+    // Se actualiza la cantidad de tarjetas existentes
+    //y se comprueba la cantidad de tarjetas para cada clase específica (task, event, list).
+    // Si no quedan tarjetas coincidentes con el filtro activo se muestra un mensaje, 
+    //a menos que no haya filtro activo, en cuyo caso se muestra el mensaje si no hay tarjetas en ninguna categoría.
+
+    if (allFilter.classList[1] == "active") {
+        if (c == 0) {
             showMessage();
-            depureMessage();
         }
-    }
-    else{
+    } else {
         switch (t) {
             case "task":
-                if(tF == "active" && cardsTask == 0){
+                if (taskFilter.classList[1] == "active" && cardsTask == 0) {
                     showMessage();
-                    depureMessage();
                 }
                 break;
             case "event":
-                if(eF=="active" && cardsEvent == 0){
+                if (eventFilter.classList[1] == "active" && cardsEvent == 0) {
                     showMessage();
-                    depureMessage();
                 }
                 break;
             case "list":
-                if(lF == "active" && cardsList == 0){
+                if (listFilter.classList[1] == "active" && cardsList == 0) {
                     showMessage();
-                    depureMessage();
                 }
                 break;
         }

@@ -511,7 +511,7 @@ form{
     grid-template-rows:auto;
     background: #eee7e7;
     pointer-events: none;
-    box-shadow: 5px 3px 5px;        
+    box-shadow: 5px 3px 5px;    
 
     .cardData, .cardDate, .cardItems, .cardVew{        
         padding: 5%;
@@ -577,18 +577,18 @@ form{
     }
 
     .delete:hover{
-        color: #a70505ee;
+        color: #a70505;
         background-color: #ffffff;
-        border-color:#a70505ee;
+        border-color:#a70505;
         box-shadow: inset 3px 5px 5px #830202;
         transition: border, border-color, background, box-shadow, 1s;
     }
 
     .delete:focus{
         cursor: auto;
-        background-color: #e40f0fee;
-        border-color:#e40f0fee;
-        color:#e40f0fee;
+        background-color: #e40f0f;
+        border-color:#e40f0f;
+        color:#e40f0f;
         box-shadow: none;
         transition: border, border-color, background, box-shadow, 1s;
     }
@@ -746,34 +746,6 @@ form{
     animation:show_card 1s;
 }
 
-.messageShow{
-    animation: show_Message 1s;
-}
-
-.messageHidden{
-    animation: hidden_Message 1s;
-}
-
-@keyframes hidden_Message{
-    0%,55%{
-        opacity: 100%;
-    }
-
-    55%, 100%{
-        opacity:0%;
-    }
-}
-
-@keyframes show_Message{
-    0%,55%{
-        opacity: 0%;
-    }
-
-    55%, 100%{
-        opacity:100%;
-    }
-}
-
 @keyframes hidden_card {
     0% {
         transform: translateX(0%);
@@ -860,3 +832,205 @@ form{
         opacity: 0;
     }
 }
+
+/* Media Queries */
+/* 
+@media (max-width:1300px){
+
+    .alertConteiner{
+        .alert{            
+            .alertTitle{
+                font-size: 25px;
+            }
+    
+            .alertContent{
+                font-size: 25px;
+            }
+    
+            .buttonAlertContent{
+                margin: 0;
+                text-align: end;
+                min-width: min-content;
+            }
+    
+            .closeAlert{
+                font-size: 25px;
+            }
+        }
+    }
+    
+    .modal{
+        .title,.titleGrid{
+            font-size: 25px;            
+        }
+
+        .descrip {
+            font-size: 25px;            
+        }
+        
+        .descrip::-webkit-scrollbar{
+            width: 10px;
+        }
+
+        .closeButton{
+            font-size: 25px;            
+        }
+    }
+    
+
+    body{
+        background: #632102;
+    }
+    nav{
+        .navButton, .active{
+            font-size: 50px;
+        }
+    }
+
+    .insertCard{
+        height: 650px;
+    }
+
+    form{
+        font-size: 25px;
+
+
+        .titleInput{
+            font-size: 25px;
+        }
+    
+        .itemList{
+            font-size: 25px;
+        }
+        
+        .cardDescription{
+            font-size: 25px;
+            padding: 1%;
+        }    
+    
+        .cardDescription::-webkit-scrollbar{
+            width: 10px;
+        }
+        
+        .dateEvent{
+            font-size: 25px;
+            padding: 1%;
+        }
+    
+        .formButton{
+            font-size: 20px;
+        }
+    }
+
+    .cardTable{
+        .message{
+            font-size: 25px;
+        }
+    }
+    
+    .cardTable::-webkit-scrollbar{
+        width: 10px;
+    }
+
+    .task, .event, .list{
+        font-size: 25px;
+    }
+}
+
+@media (max-width:950px){
+    
+
+    .alertConteiner{
+        .alert{            
+            .alertTitle{
+                font-size: 50px;
+            }
+    
+            .alertContent{
+                font-size: 50px;
+            }
+    
+            .closeAlert{
+                font-size: 5px;
+            }
+        }
+    }
+    
+    .modal{
+        .title,.titleGrid{
+            font-size: 25px;            
+        }
+
+        .descrip {
+            font-size: 25px;            
+        }
+        
+        .descrip::-webkit-scrollbar{
+            width: 10px;
+        }
+
+        .closeButton{
+            font-size: 25px;            
+        }
+    }
+    
+
+    body{
+        background: #025863;
+    }
+
+    nav{
+        .navButton, .active{
+            font-size: 25px;
+        }
+    }
+
+    .insertCard{
+        height: 650px;
+    }
+
+    form{
+        font-size: 25px;
+
+
+        .titleInput{
+            font-size: 25px;
+        }
+    
+        .itemList{
+            font-size: 25px;
+        }
+        
+        .cardDescription{
+            font-size: 25px;
+            padding: 1%;
+        }    
+    
+        .cardDescription::-webkit-scrollbar{
+            width: 10px;
+        }
+        
+        .dateEvent{
+            font-size: 25px;
+            padding: 1%;
+        }
+    
+        .formButton{
+            font-size: 20px;
+        }
+    }
+
+    .cardTable{
+        .message{
+            font-size: 25px;
+        }
+    }
+    
+    .cardTable::-webkit-scrollbar{
+        width: 10px;
+    }
+
+    .task, .event, .list{
+        font-size: 25px;
+    }
+} */
