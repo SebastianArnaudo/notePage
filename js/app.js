@@ -684,7 +684,6 @@ function createCard(title,desc,date){
     const d = desc;
 
     const bit= "Ver";
-    const bdt= "delete";
 
     const card = document.createElement("div");
     const cardD = document.createElement("section");
